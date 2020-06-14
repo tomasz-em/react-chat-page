@@ -1,7 +1,7 @@
 import React from 'react';
 import * as io from 'socket.io-client';
 
-import './Chat.css';
+import './Chat.scss';
 
 class Chat extends React.Component {
   socket = null;
@@ -13,6 +13,7 @@ class Chat extends React.Component {
 
     this.state = {
       authorId: 'Wojtek eM',
+      isChatDisplayed: true,
       messages: [
         // { text: string, authorId: number }
       ]
@@ -46,9 +47,13 @@ class Chat extends React.Component {
     }
   };
 
+  clickHandleClickOnOuter = () => {
+    this.setState({ isChatDisplayed: !this.state.isChatDisplayed });    // negowanie stanu pokazania okna chatu
+  }
+
   render() {
     return (
-      <section className="wrapper">
+      <section className={ this.state.isChatDisplayed ? "wrapper" : "wrapper moved" }>
         <div className="chat">
           <header>Contact us!</header>
           <section>
@@ -70,10 +75,12 @@ class Chat extends React.Component {
               onKeyUp={this.handleEnterPress}
               placeholder="Type a message here and press enter..."
             />
-            <button onClick={this.sendMessage} className="button">
-              Send
-            </button>
+            <button onClick={this.sendMessage} className="button">Send</button>
           </footer>
+
+        </div>
+        <div className="outer-click" onClick={this.clickHandleClickOnOuter}>
+            { this.state.isChatDisplayed ? "Ukryj" : "Pokaż" } czat
         </div>
       </section>
     );

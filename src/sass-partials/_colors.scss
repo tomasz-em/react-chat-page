@@ -1,0 +1,14 @@
+// nazwane zmienne jako WARTOŚCI użytych kolorów 
+
+$red: red;
+
+$golden: #dd5;
+$text-light: #f8f9fa; // bootstrap: .text-light
+$text-light-hover: #cbd3da; // bootstrap: a.text-light:hover, a.text-light:focus
+
+// PODEJŚCIE FUNKCJONALNE DO KOLORÓW
+  // -- często wykorzystuje powyższe definicje
+
+$error-text: $red;  // przeklejenie już zdefiniowanej barwy do innej zmiennej  
+
+$sample-color: #c6538c; // nowa definmicja koloru
