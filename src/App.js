@@ -1,61 +1,80 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import * as io from 'socket.io-client';
+
 import './App.css';
 
-const App = () => {
-  // w celu uzycia wartosci w useEffect musze skorzystac z referencji tworzonej przez useRef
-  const connectionRef = useRef();
-  const messagesRef = useRef([]);
+class App extends React.Component {
+  socket = null;
 
-  // stan aplikacji
-  const [myMessage, setMyMessage] = useState('');
-  const [messages, setMessages] = useState(messagesRef.current);
+  constructor() {
+    super();
+    this.state = {
+      authorId: 'Wojtek eM',
+      messages: [
+        // { text: string, authorId: number }
+      ]
+    };
+  }
 
-  useEffect(() => {
-    // sprawdzam czy polaczenie zostalo juz nawiazane
-    if (connectionRef.current === undefined) {
-      // nawiazuje polaczenie
-      connectionRef.current = io.connect('https://chat-server.fbg.pl');
-
-      // nasluchuje na wiadomosci od serwera
-      connectionRef.current.on('chat message', (message) => {
-        // aktualizuje referencje do tablicy wiadomosci
-        // ta aktualizacja nie wplynie na proces renderingu
-        // musze recznie zaktualizowac stan, zeby powiedziec react'owi ze ma sie przerenderowac
-        messagesRef.current = [...messagesRef.current, message];
-
-        // aktualizuje stan zeby przerenderowac widok
-        setMessages(messagesRef.current);
-      });
-    }
-  }, []);
-
-  const handleMessageChange = (event) => {
-    setMyMessage(event.target.value);
-  };
-
-  const handleSend = () => {
-    connectionRef.current.emit('chat message', {
-      text: myMessage,
-      authorId: 'Wojtek',
+  componentWillMount() {
+    this.socket = io.connect('https://socket-chat-server-zbqlbrimfj.now.sh', {
+      transports: ['websocket'],
+      reconnection: true
     });
+
+    this.socket.on('chat message', message => {
+      this.state.messages.push(message);
+      this.setState({ messages: this.state.messages });
+    });
+  }
+
+  sendMessage = () => {
+    const text = this.refs.textarea.value.trim();
+    if (text) {
+      const message = { text, authorId: this.state.authorId };
+      this.socket.emit('chat message', message);
+      this.refs.textarea.value = '';
+    }
   };
 
-  return (
-    <div>
-      <div>
-        <input onChange={handleMessageChange} value={myMessage} />
-        <button onClick={handleSend}>send</button>
-      </div>
-      <ul>
-        {messages.map((el, index) => (
-          <li key={index}>
-            <b>{el.authorId}:</b> {el.text}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
+  handleEnterPress = event => {
+    if (event.keyCode === 13) {
+      this.sendMessage();
+    }
+  };
+
+  render() {
+    return (
+      <section className="wrapper">
+        <div className="chat">
+          <header>Contact us!</header>
+          <section>
+            {this.state.messages.map(message => (
+              <div key={message.id} className="message">
+                {message.authorId}:{' '}
+                {message.authorId === this.state.authorId ? (
+                  <span>{message.text}</span>
+                ) : (
+                    message.text
+                  )}
+              </div>
+            ))}
+          </section>
+          <footer>
+            <textarea
+              ref="textarea"
+              className="textarea"
+              onKeyUp={this.handleEnterPress}
+              placeholder="Type a message here and press enter..."
+            />
+            <button onClick={this.sendMessage} className="button">
+              Send
+            </button>
+          </footer>
+        </div>
+      </section>
+    );
+  }
+}
 
 export default App;
