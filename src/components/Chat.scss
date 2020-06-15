@@ -1,3 +1,10 @@
+$bookmark-color: yellow;
+$bookmark-color-hover: #f8f800;
+
+$chat-main-color: #333;
+$chat-secondary-color: #666;
+
+
 $chat-width: 300px;
 $chat-max-width: 500px;
 
@@ -8,20 +15,22 @@ $chat-max-width: 500px;
     right: 5px;
     width: 300px;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.2);
     padding: 0 20px;
     border-left: 10px solid #333;;
     transition: right 0.3s;
 
-    .outer-click {
+    .outer-bookmark {
       position: absolute;
-      width: 250px;
+      width: 200px;
       top: 4em;
       left: -5.05em;
+      z-index: 999;
       text-align: center;
       color: black;
-      background-color: yellow;
-      font-size: 2em;
+      background-color: $bookmark-color;
+      box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.5);
+      font-size: 1.5em;
       padding: 0.25em 1em;
       border-top-left-radius: 0.5em;
       border-top-right-radius: 0.5em;
@@ -29,7 +38,8 @@ $chat-max-width: 500px;
       transition: background-color 0.2s 0.05s;
 
       &:hover {
-        background-color: #f1f100;
+        background-color: $bookmark-color-hover;
+        box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.6);
         cursor: pointer;
       }
     }
@@ -45,7 +55,7 @@ $chat-max-width: 500px;
   bottom: 0;
   display: flex;
   width: calc(100% - 40px);
-  height: 90%;
+  height: 95%;
   flex-direction: column;
 
   header {
@@ -71,9 +81,49 @@ $chat-max-width: 500px;
 
   footer {
     order: 3;
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(100, 50, 20, 0.9);
     box-sizing: border-box;
-   }
+
+    .chat-controls {
+      display: flex;
+      background-color: royalblue;
+
+
+      .textarea {
+          // width: 77%;
+          //min-width: ;
+          //margin-right: 5em;
+        flex-grow: 2;
+        height: 100%;
+        border: 0px;
+        padding: 0.7em;
+        // outline: none;
+        color: #111111; /* #d9a646; */
+        background-color: lightblue;  /* transparent; */
+        resize: none;
+      }
+      
+      .send-button {
+        // float: right;
+        margin: 0.2em;
+        padding-top: 1em;
+        padding-bottom: 1em;
+        border-radius: 2px;
+        color: #d9a646;
+        background: transparent;
+        border: 2px solid #d9a646;
+        // outline: none;
+      }
+      
+      .send-button:hover {
+        border: 2px solid #fff;
+        color: #fff;
+        cursor: pointer;
+      }
+    } // .chat-controls-END
+    
+
+   }  // footer-END
   } // .chat-END
 
 .message {
@@ -87,33 +137,7 @@ $chat-max-width: 500px;
   }
 } // .message-END
 
-.textarea {
-  width: 100%;
-  height: 100%;
-  border: 0px;
-  padding: 10px;
-  box-sizing: border-box;
-  outline: none;
-  color: #d9a646;
-  background-color: transparent;
-  resize: none;
-}
 
-.button {
-  border-radius: 0;
-  border: 2px solid #d9a646;
-  color: #d9a646;
-  background: transparent;
-  float: right;
-  margin: 5px;
-  outline: none;
-}
-
-.button:hover {
-  border: 2px solid #fff;
-  color: #fff;
-  cursor: pointer;
-}
 
 /* -----------------------   KWERENDY   ----------------------- */
 
@@ -128,4 +152,9 @@ $chat-max-width: 500px;
   .wrapper.moved {
     right: 10px - $chat-width;
   }
+
+/*   .chat footer .chat-controls .textarea {
+      width: 84%; // zwiększenie szerokości
+  }  */
+
 }

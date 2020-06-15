@@ -10,6 +10,8 @@ class Chat extends React.Component {
     super();
 
     this.chatServerUrl = 'https://socket-chat-server-zbqlbrimfj.now.sh';   // możliwy do użycia też 'https://chat-server.fbg.pl' 
+    this.nicknameMinLength = 3;  // minimlana długość imienia/ksywki
+    this.nicknameMaxLength = 25;  // maksymalna długość
 
     this.state = {
       authorId: 'Wojtek eM',
@@ -42,7 +44,7 @@ class Chat extends React.Component {
   };
 
   handleEnterPress = event => {
-    if (event.keyCode === 13) {
+    if ( ( event.keyCode === 13 ) && ( event.shiftKey) ) {
       this.sendMessage();
     }
   };
@@ -55,7 +57,13 @@ class Chat extends React.Component {
     return (
       <section className={ this.state.isChatDisplayed ? "wrapper" : "wrapper moved" }>
         <div className="chat">
-          <header>Contact us!</header>
+          <header>
+            <p>
+              Szybki kontakt <span>(Ty jako <strong>{ this.state.authorId }</strong>)</span>
+              <button>Wyjdź</button>
+            </p>
+          </header>
+
           <section>
             {this.state.messages.map(message => (
               <div key={message.id} className="message">
@@ -68,19 +76,19 @@ class Chat extends React.Component {
               </div>
             ))}
           </section>
+
           <footer>
-            <textarea
-              ref="textarea"
-              className="textarea"
-              onKeyUp={this.handleEnterPress}
-              placeholder="Type a message here and press enter..."
-            />
-            <button onClick={this.sendMessage} className="button">Send</button>
+            <div className="chat-controls">
+              <textarea className="textarea" ref="textarea" wrap="soft" maxLength="100" placeholder="Zapytaj o ofertę...  (szybka wysyłka: [Shift] + [Enter])"
+                onKeyUp={this.handleEnterPress} />
+              <button onClick={this.sendMessage} className="send-button">Wyślij</button>
+            </div>
+
           </footer>
 
         </div>
-        <div className="outer-click" onClick={this.clickHandleClickOnOuter}>
-            { this.state.isChatDisplayed ? "Ukryj" : "Pokaż" } czat
+        <div className="outer-bookmark" onClick={this.clickHandleClickOnOuter}>
+            { this.state.isChatDisplayed ? "Zwiń" : "Rozwiń" } czat
         </div>
       </section>
     );
