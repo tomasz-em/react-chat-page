@@ -15,7 +15,7 @@ class Chat extends React.Component {
     this.messageMaxLength = 250;  // ilośc znaków do wpisania na kliencie; ile przyjmuje serwer?
 
     this.state = {
-      authorId: 'Wojtek eM',
+      authorId: '', // czyszczenie na starcie
       isChatExpanded: true,  // czy rozszrzony, czy zwiniety poza okno
       isLoggedInUser: false,  // czy jest "zalogowany" użytkownik
       isNicknameCorrect: true,
@@ -147,11 +147,13 @@ class Chat extends React.Component {
             { !this.state.isLoggedInUser && ( // wariant FALSE - warunkowe wyświetlanie dla NIEZALOGOWANEGO UŻYTKOWNIKA
             <div className="nick-selection">
               <p className="nick-info">Wpisz swoje imię lub pseudonim by móc pisać wiadomości. Obowiązkowo.</p>
-              <input type="text" className={ this.state.isNicknameCorrect ? "nick-input" : "nick-input bad-or-empty" } ref="nickname" minLength={ this.nicknameMaxLength } maxLength={ this.nicknameMaxLength }
-                  onKeyUp={ this.handleEnterOnNicknameInput } placeholder="Janek" defaultValue={ this.state.nickname } required />
-              <button className="chat-login" onClick={ this.handleClickToChatLogin } >Wejdź</button>
+              <div>
+                <input type="text" className={ this.state.isNicknameCorrect ? "nick-input" : "nick-input bad-or-empty" } ref="nickname" minLength={ this.nicknameMaxLength } maxLength={ this.nicknameMaxLength }
+                    onKeyUp={ this.handleEnterOnNicknameInput } placeholder="Janek" defaultValue={ this.state.nickname } required />
+                <button className="chat-login" onClick={ this.handleClickToChatLogin } >Wejdź</button>
+              </div>
               { !this.state.isNicknameCorrect && (
-              <div className="nickname-error">Proszę podać wartość.</div>
+              <div className="nickname-error">Brak nazwy lub za krótka (min. 3 znaki).</div>
               )}
             </div>
             )}

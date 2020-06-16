@@ -1,3 +1,24 @@
+@import '../index.scss';
+/* @import '../sass-partials/colors';
+@import '../sass-partials/page-globals';
+ */
+
+/* 
+
+$red: red;
+$like-red: #d11c1c;
+$light-red: lighten(red, 25);
+
+$color-primary: #1717a7;
+$color-primary-lighten: lighten($color-primary, 30%);
+$color-secondary: #3f3fe7;
+// #1e5799 ; ##7db9e8
+
+$color-dark-text: #333;
+$color-light-text: #ddd; 
+
+*/
+
 $bookmark-color: yellow;
 $bookmark-color-hover: #f8f800;
 
@@ -11,19 +32,21 @@ $chat-max-width: 500px;
 
 .wrapper {
     position: absolute;
+    z-index: 900;
     top: -3em;
     right: 5px;
     width: 300px;
-    height: 110vh;
+    height: 120vh;
+    min-height: 600px;  // dodano, by obszar wokół (kontener) był zawsze wyższy niż 500px chatu
     background-color: rgba(0, 0, 0, 0.2);
-    padding: 0 20px;
-    border-left: 10px solid #333;;
+    padding: 0 1em;
+    border-left: 0.75em solid #333;;
     transition: right 0.3s, transform 0.3s;
 
     .outer-bookmark {
       position: absolute;
       width: 200px;
-      top: 6em;
+      top: 8em;
       left: -5.05em;
       z-index: 999;
       text-align: center;
@@ -53,21 +76,30 @@ $chat-max-width: 500px;
 
 .chat {
   position: absolute;
-  bottom: 2.5em;
+  top: 4em; // dodano to położenie, usunięto wysokość elementu!
+  bottom: 8em;
+  min-height: 500px;
+  /* height: 84vh; */ // dodano margines górny, zamist tej definicji
+
   display: flex;
   width: calc(100% - 40px);
-  height: 88%;
-  flex-direction: column;
+  flex-direction: column; 
+  border: 2px solid $color-primary;
+  border-radius: 1em;
+  // background: radial-gradient(ellipse at center, $color-primary 0%, $color-secondary 100%);
 
   header {
     order: 1;
-    height: 40px;
-    flex-basis: 23px;
-    padding: 10px;
-
-    font-weight: bold;
-    background-color: rgba(0, 0, 0, 0.9);
+    height: 3em;
+    min-height: 3.5em;  /* uwzględdnia tę wysokość */
+    flex-basis: 1.5em;
+    font-size: 1em;
+    padding: 0.75em;
     color: #fff;
+    font-weight: bold;
+    background-color: $color-primary; /* rgba(0, 0, 0, 0.9); */
+    border-top-left-radius: 0.75em;
+    border-top-right-radius: 0.75em;
   }
 
   section {
@@ -82,60 +114,107 @@ $chat-max-width: 500px;
 
   footer {
     order: 3;
-    background-color: rgba(100, 50, 20, 0.9);
-    box-sizing: border-box;
-    min-height: 6em;
+    background-color: $color-primary; /* rgba(100, 50, 20, 0.9); */
+    min-height: 11em;
+    flex-basis: 10em;
+    border-bottom-left-radius: 0.75em;
+    border-bottom-right-radius: 0.75em;
 
     .nick-selection {
       position: relative;
+      padding: 0.5em;
       padding-bottom: 1em;
+      min-height: 10em;
+
+      p {
+        color: white;
+      }
+
+      div:first-of-type {
+        display: flex;
+        flex-direction: column;
+
+        input {
+          margin-top: 0.5em;
+          padding: 0.25em;
+          color: $color-primary;
+
+          &:hover {
+            background-color: darken(white, 10);
+          }
+
+          &.bad-or-empty {
+            background-color: $error-background-color;
+            border-color: lighten($red, 15);
+
+            &:hover {
+              background-color: darken($error-background-color, 3); // !!! nie można wywołać kolejnego lighten(), dla wartości oblicoznej z lighten() !!!
+              // background-color: red; / /bezpośrenią wartość lub zmienną wyświetli od razu 
+            } 
+          } // &.bad-or-empty-END
+          
+
+        } // input-END
+
+        button {
+          margin-top: 0.5em;
+          margin-bottom: 0.5em;
+          padding: 0.2em;
+        }
+
+
+
+      } // div:first-of-type-END
 
       .nickname-error {
         position: absolute;
-        top: -2.5em;
+        top: -4em;
         // width: 90%;
         left: 0.5em;
         right: 0.5em;
         padding: 0.25em;
         text-align: center;
-        background-color: salmon;
         color: white;
-        border: 3px solid #e66;
+        background-color: $like-red;
+        border: 3px solid lighten($like-red, 5);
+      } // .nickname-error-END
 
-      }
 
-      .bad-or-empty {
-        background-color: salmon;
-      }
-
-    }
+    } // .nick-selection-END
 
 
     .chat-controls {
       display: flex;
-      background-color: royalblue;
-
+      flex-direction: column;
+      background-color: $color-primary-lighten;
+      padding: 0.5em;
+      padding-bottom: 0.75em;
 
       .textarea {
           // width: 77%;
           //min-width: ;
           //margin-right: 5em;
+        font-size: 1.15em;
         flex-grow: 2;
         height: 100%;
+        min-height: 5em;
         border: 0px;
-        padding: 0.7em;
+        padding: 0.5em;
         // outline: none;
         color: #111111; /* #d9a646; */
-        background-color: lightblue;  /* transparent; */
+        background-color: lighten($color: $color-primary, $amount: 50);  /* transparent; */
         resize: none;
       }
       
       .send-button {
         // float: right;
-        margin: 0.2em;
-        padding-top: 1em;
-        padding-bottom: 1em;
-        border-radius: 2px;
+          // margin: 0.2em;
+        font-size: 1.1em;
+        margin-top: 0.75em;
+        margin-bottom: 0.5em;
+        padding-top: 0.25em;
+        padding-bottom: 0.25em;
+        border-radius: 4px;
         color: #d9a646;
         background: transparent;
         border: 2px solid #d9a646;
@@ -180,8 +259,8 @@ $chat-max-width: 500px;
     right: 10px - $chat-width;
   }
 
-/*   .chat footer .chat-controls .textarea {
-      width: 84%; // zwiększenie szerokości
-  }  */
+  .chat footer .nick-selection .nickname-error {
+    top: -2.5em;
+  }
 
 }

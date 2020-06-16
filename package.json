@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.2.1",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
+    "react-app-polyfill": "^1.0.6",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
     "socket.io-client": "2.0.4"
@@ -25,15 +26,26 @@
   "browserslist": {
     "production": [
       ">0.2%",
+      "IE 11",
       "not dead",
-      "IE > 10",
       "not op_mini all"
     ],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version",
-      "IE > 10"
+      "last 1 ie version"
     ]
-  }
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-arrow-functions": "^7.10.1"
+  },
+  "plugins": [
+    [
+      "@babel/plugin-transform-arrow-functions",
+      {
+        "spec": true
+      }
+    ]
+  ]
 }
