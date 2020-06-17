@@ -1,8 +1,18 @@
-@import '../index.scss';
+@import '../sass/main.scss';
 
-
+  // ZMIENNE KOMPONENTU <CHAT>
 $chat-width: 300px;
 $chat-max-width: 500px;
+
+$width-treshold: 750px;
+
+// @media only screen and (min-width: 750px) {
+$media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w progu zmiany szerokości powyżej
+
+// późniejsze użycie w danym elemencie jako wartościowanie danej zmiennej: 
+/* @media #{$media-750w} {
+  // ... 
+} */
 
 
 .wrapper {
@@ -37,10 +47,11 @@ $chat-max-width: 500px;
 
       &:hover {
         background-color: $bookmark-color-hover;
-        box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.6);
+        text-shadow: 0px 0px 2px rgba(255, 255, 255, 1);
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
         cursor: pointer;
       }
-    }
+    } // .outer-bookmark-END
 }
 
 .wrapper.moved {
@@ -61,7 +72,6 @@ $chat-max-width: 500px;
   flex-direction: column; 
   border: 2px solid $color-primary;
   border-radius: 1em;
-  // background: radial-gradient(ellipse at center, $color-primary 0%, $color-secondary 100%);
 
   header {
     position: relative;
@@ -82,19 +92,15 @@ $chat-max-width: 500px;
     }
 
     .logged-in-info {
-/*       display: flex;
-      flex-direction: row;
-      justify-content: space-between; */
       margin: 0.5em -0.6em;   // aby rozszerzyć na obszarze rodzica i ewentualeni zasłonić swoją treścią to co poniżej/dalej w wtreści
-      // margin-bottom: 0.5em;
       padding: 0.5em;
-      // padding-right: 5em; // prawy +4.5 względem standardu!
-      // border: 1px solid #aaa;
       background-color: $color-primary;
-      // margin: -0.5em;
-      // text-align: right;
       word-break: break-word;  // automatyczne łamanie do nowej linii dla długich wyrazów | alternatywnie "overflow-wrap: break-word", ale mniejsze wsparcie
       overflow-wrap: break-word;  // nie dla IE
+
+      @media #{$media-750w} {
+        padding-right: 5em; // prawy +4.5 względem standardu!
+      }
 
       span {
 
@@ -105,14 +111,18 @@ $chat-max-width: 500px;
           word-break: break-word; // !!! mogą być różne długie treści od użytkownika (np. te same znaki po sobie BEZ SPACJI!)
           overflow-wrap: break-word;  // lepsze, ale IE tego nie ogarnia
         }
-      }
+      } // span-END
 
       .chat-logout {
         position: absolute;
         top: 0.75em;
         right: 0.5em;
         padding: 0.5em 1em;
-      }
+
+        @media #{$media-750w} {
+          top: 2.25em;
+        }
+      } // .chat-logout-END
     } // .logged-in-info-END
 
   } // header-END
@@ -148,11 +158,20 @@ $chat-max-width: 500px;
         padding: 0.5em 0;
         text-align: justify;
         text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+
+        @media #{$media-750w} {
+          padding: 1em 0;
+        }
       }
 
       div:first-of-type {
         display: flex;
         flex-direction: column;
+
+        @media #{$media-750w} {
+          flex-direction: row;
+          align-items: baseline;
+        }
 
         input {
           display: block;
@@ -161,9 +180,13 @@ $chat-max-width: 500px;
           color: $text-color-darker;
           // border-width: 2px;
 
+          @media #{$media-750w} {
+            flex-grow: 2;
+            padding: 0.4em;
+          }
+
           &:hover {
             background-color: darken(white, 10);
-            // border-width: 2px;
           }
 
           &.bad-or-empty {
@@ -175,8 +198,6 @@ $chat-max-width: 500px;
               // background-color: red; // zwykła lub bezpośrednia wartość lub zmienną wyświetli od razu w zmienionym stanie
             } 
           } // &.bad-or-empty-END
-          
-
         } // input-END
 
         button {
@@ -184,9 +205,12 @@ $chat-max-width: 500px;
           margin-top: 0.5em;
           margin-bottom: 0.5em;
           padding: 0.25em;
-        }
 
-
+          @media #{$media-750w} {
+            margin-left: 0.5em;
+            padding: 0.5em 1em;
+          }
+        } // button
 
       } // div:first-of-type-END
 
@@ -201,11 +225,13 @@ $chat-max-width: 500px;
         color: white;
         background-color: $like-red;
         border: 3px solid lighten($like-red, 5);
+
+        @media #{$media-750w} {
+          top: -2.5em;
+        }
       } // .nickname-error-END
 
-
     } // .nick-selection-END
-
 
     .chat-controls {
       display: flex;
@@ -251,7 +277,6 @@ $chat-max-width: 500px;
         cursor: pointer;
       }
     } // .chat-controls-END
-    
 
    }  // footer-END
   } // .chat-END
@@ -271,53 +296,17 @@ $chat-max-width: 500px;
 
 /* -----------------------   KWERENDY   ----------------------- */
 
+// te kwerendy dodatkowo definiują zmienną szerokość elementów, dlatego dla uproszczenia projektu zostają globalnie przekazane
+
 @media only screen and (min-width: 750px) {
   $chat-width: 400px;
   
   .wrapper {
     width: $chat-width;
-    //$chat-max-width: 500px;
   }
 
   .wrapper.moved {
     right: 10px - $chat-width;
   }
-
-  .chat header .logged-in-info {
-    padding-right: 5em; // prawy +4.5 względem standardu!
-
-    .chat-logout {
-      top: 2.25em;
-    }
-  }
-
-  .chat footer .nick-selection {
- 
-    p {
-      padding: 1em 0;
-    }
-
-    & div:first-of-type {
-      flex-direction: row;
-      align-items: baseline;
-
-      input {
-        flex-grow: 2;
-        padding: 0.4em;
-      }
-
-      button {
-        margin-left: 0.5em;
-        padding: 0.5em 1em;
-        // padding-left: 1em;
-        // padding-right: 1em;
-            // border-radius: 2px;
-      }
-    }
-
-    & .nickname-error {
-      top: -2.5em;
-    }
-  } //  .chat footer .nick-selection-END
 
 }
