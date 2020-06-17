@@ -12,19 +12,47 @@ $text-light-hover: #cbd3da; // bootstrap: a.text-light:hover, a.text-light:focus
 
 // PODEJŚCIE FUNKCJONALNE DO KOLORÓW - wykorzystanie wcześniejszych definicji
 
+$color-primary: #3f3fe7;    // #1717a7
+$color-primary-lighten: lighten($color-primary, 30%);
+$color-secondary: #1717a7;  // #3f3fe7
+// #1e5799 ; ##7db9e8
+
+$text-color-darker: #1717a7;   // ciemniejszy na bazie wcześniejszego "$color-primary:#1717a7"
+$color-dark-text: #333;
+$color-light-text: #ddd;
+
+$error-background-color: $light-red;
+
+$bookmark-color: yellow;
+$bookmark-color-hover: #f8f800;
+
+
+
+// WSTĘNIE NIEUŻYWANE TREŚCI (bez istniejacych odwołań)
+
+/*
+$chat-main-color: #333;
+$chat-secondary-color: #666;
+$sample-color: #c6538c; // nowa definicja koloru
+
+$red: red;
+$like-red: #d11c1c;
+$light-red: lighten(red, 25);
+
 $color-primary: #1717a7;
 $color-primary-lighten: lighten($color-primary, 30%);
 $color-secondary: #3f3fe7;
 // #1e5799 ; ##7db9e8
 
 $color-dark-text: #333;
-$color-light-text: #ddd;
+$color-light-text: #ddd; 
 
-$sample-color: #c6538c; // nowa definicja koloru
 
 $error-text-color: $red; 
-$error-background-color: $light-red;
-// $error-background-color-lighten: lighten($light-red, 5);
+
+$error-background-color-lighten: lighten($light-red, 5);
+
+*/
 
 
 

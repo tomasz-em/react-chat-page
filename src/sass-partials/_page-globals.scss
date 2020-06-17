@@ -1,3 +1,5 @@
+//@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 html {
     box-sizing: border-box;
 }
@@ -27,6 +29,7 @@ input,
 textarea,
 button
 {
+    font-family: Roboto, sans-serif;    // ! cały czas i tak "jakaś" czcionka domyślna była dostępna
     font-size: 1em;
     padding: 0.25em;    // ta wartość się zmienia względem styli domyslnych przegląarek, zwłaszca dla ":hover"
 }

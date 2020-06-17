@@ -1,29 +1,4 @@
 @import '../index.scss';
-/* @import '../sass-partials/colors';
-@import '../sass-partials/page-globals';
- */
-
-/* 
-
-$red: red;
-$like-red: #d11c1c;
-$light-red: lighten(red, 25);
-
-$color-primary: #1717a7;
-$color-primary-lighten: lighten($color-primary, 30%);
-$color-secondary: #3f3fe7;
-// #1e5799 ; ##7db9e8
-
-$color-dark-text: #333;
-$color-light-text: #ddd; 
-
-*/
-
-$bookmark-color: yellow;
-$bookmark-color-hover: #f8f800;
-
-$chat-main-color: #333;
-$chat-secondary-color: #666;
 
 
 $chat-width: 300px;
@@ -89,18 +64,59 @@ $chat-max-width: 500px;
   // background: radial-gradient(ellipse at center, $color-primary 0%, $color-secondary 100%);
 
   header {
+    position: relative;
     order: 1;
-    height: 3em;
-    min-height: 3.5em;  /* uwzględdnia tę wysokość */
+    height: 5.75em;
+    min-height: 6em;  /* uwzględdnia tę wysokość */
     flex-basis: 1.5em;
     font-size: 1em;
-    padding: 0.75em;
+    padding: 0.75em 0.5em;
     color: #fff;
     font-weight: bold;
     background-color: $color-primary; /* rgba(0, 0, 0, 0.9); */
     border-top-left-radius: 0.75em;
     border-top-right-radius: 0.75em;
-  }
+
+    p {
+      font-size: 1.25em;
+    }
+
+    .logged-in-info {
+/*       display: flex;
+      flex-direction: row;
+      justify-content: space-between; */
+      margin: 0.5em -0.6em;   // aby rozszerzyć na obszarze rodzica i ewentualeni zasłonić swoją treścią to co poniżej/dalej w wtreści
+      // margin-bottom: 0.5em;
+      padding: 0.5em;
+      // padding-right: 5em; // prawy +4.5 względem standardu!
+      // border: 1px solid #aaa;
+      background-color: $color-primary;
+      // margin: -0.5em;
+      // text-align: right;
+      word-break: break-word;  // automatyczne łamanie do nowej linii dla długich wyrazów | alternatywnie "overflow-wrap: break-word", ale mniejsze wsparcie
+      overflow-wrap: break-word;  // nie dla IE
+
+      span {
+
+        strong {
+          font-size: 1.1em;
+          text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+          color: #f0f000; // przykład
+          word-break: break-word; // !!! mogą być różne długie treści od użytkownika (np. te same znaki po sobie BEZ SPACJI!)
+          overflow-wrap: break-word;  // lepsze, ale IE tego nie ogarnia
+        }
+      }
+
+      .chat-logout {
+        position: absolute;
+        top: 0.75em;
+        right: 0.5em;
+        padding: 0.5em 1em;
+      }
+    } // .logged-in-info-END
+
+  } // header-END
+
 
   section {
     order: 2;
@@ -111,6 +127,7 @@ $chat-max-width: 500px;
     color: rgba(0, 0, 0, 0.7);
     overflow: auto;
   }
+
 
   footer {
     order: 3;
@@ -128,6 +145,9 @@ $chat-max-width: 500px;
 
       p {
         color: white;
+        padding: 0.5em 0;
+        text-align: justify;
+        text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
       }
 
       div:first-of-type {
@@ -135,9 +155,10 @@ $chat-max-width: 500px;
         flex-direction: column;
 
         input {
+          display: block;
           margin-top: 0.5em;
-          padding: 0.25em;
-          color: $color-primary;
+          padding: 0.3em;
+          color: $text-color-darker;
           // border-width: 2px;
 
           &:hover {
@@ -159,9 +180,10 @@ $chat-max-width: 500px;
         } // input-END
 
         button {
+          // display: block;
           margin-top: 0.5em;
           margin-bottom: 0.5em;
-          padding: 0.2em;
+          padding: 0.25em;
         }
 
 
@@ -196,7 +218,7 @@ $chat-max-width: 500px;
           // width: 77%;
           //min-width: ;
           //margin-right: 5em;
-        font-size: 1.15em;
+        font-size: 1em;
         flex-grow: 2;
         height: 100%;
         min-height: 5em;
@@ -249,7 +271,7 @@ $chat-max-width: 500px;
 
 /* -----------------------   KWERENDY   ----------------------- */
 
-@media only screen and (min-width: 800px) {
+@media only screen and (min-width: 750px) {
   $chat-width: 400px;
   
   .wrapper {
@@ -261,8 +283,41 @@ $chat-max-width: 500px;
     right: 10px - $chat-width;
   }
 
-  .chat footer .nick-selection .nickname-error {
-    top: -2.5em;
+  .chat header .logged-in-info {
+    padding-right: 5em; // prawy +4.5 względem standardu!
+
+    .chat-logout {
+      top: 2.25em;
+    }
   }
+
+  .chat footer .nick-selection {
+ 
+    p {
+      padding: 1em 0;
+    }
+
+    & div:first-of-type {
+      flex-direction: row;
+      align-items: baseline;
+
+      input {
+        flex-grow: 2;
+        padding: 0.4em;
+      }
+
+      button {
+        margin-left: 0.5em;
+        padding: 0.5em 1em;
+        // padding-left: 1em;
+        // padding-right: 1em;
+            // border-radius: 2px;
+      }
+    }
+
+    & .nickname-error {
+      top: -2.5em;
+    }
+  } //  .chat footer .nick-selection-END
 
 }
