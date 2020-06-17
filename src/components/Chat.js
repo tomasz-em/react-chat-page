@@ -19,7 +19,7 @@ class Chat extends React.Component {
       isChatExpanded: true,  // czy rozszrzony, czy zwiniety poza okno
       isLoggedInUser: false,  // czy jest "zalogowany" użytkownik
       isNicknameCorrect: true,
-      nickname: '', // do odczytania z zewnątrz: ciastka/localStorage
+      nickname: '', // do przechowywanie przed zalogowaniem; warto odczytać z zewnątrz: ciastka/localStorage
       messages: [
         // { text: string, authorId: number }
       ]
@@ -36,6 +36,8 @@ class Chat extends React.Component {
       this.state.messages.push(message);
       this.setState({ messages: this.state.messages });
     });
+
+    this.setState({ nickname: this.readAndCheckNicknameFromStorage('chat-nickname') }); // odczytanie zapamiętanego z localStorage (o ile istnieje)
   }
 
   sendMessage = () => {
@@ -59,14 +61,27 @@ class Chat extends React.Component {
     return isEmpty === 0;
   }
 
-/*   isNicknameAlright = ( nickName = "" ) => {
-    if ( this.isEmptyString( nickName ) || ( nickName.length < this.nicknameMinLength ) || ( nickName.length > this.nicknameMaxLength ) ) {
-      console.log('BAD nickname', nickName, ( nickName.length < this.nicknameMinLength ), ( nickName.length > this.nicknameMaxLength ) );
-      return false;
-    }
-    console.log('GOOD nickname', nickName, ( nickName.length < this.nicknameMinLength ), ( nickName.length > this.nicknameMaxLength ) );
-    return true;
-  } */
+  readFromStorage = ( storageKey ) => {
+    let readValue = localStorage.getItem( storageKey );
+    if ( !readValue ) readValue = ""; // null dla braku zapisania (odsłona bez wcześnejszego czatowania) 
+    console.log("ODCZYTANO v0.1 z LS:", storageKey, readValue, "długość ciągu", readValue.length);
+    readValue = readValue.trim(); // ewentualne cięcie śmieci
+    console.log("ODCZYTANO v0.1 z LS:", storageKey, readValue, "długość ciągu", readValue.length);
+    return readValue;
+  }
+
+  readAndCheckNicknameFromStorage = ( nicknameKey ) => {
+    let nick = this.readFromStorage( nicknameKey );
+    nick = nick.substring(0, this.nicknameMaxLength); // skrócenie do wymaganej postaci
+    console.log("ODCZYTANO v0.3 z LS:", nick, "długość ciągu", nick.length);
+    return nick;
+  }
+
+  saveToStorage = ( storageKey, storageValue ) => {
+    // dane wejświowe powinny być poprawne (już po weryfikajci długości i zawartości), zatem można je od razu przechować
+    localStorage.setItem( storageKey, storageValue );
+    console.log("zapisano wartości do LS", storageKey, storageValue);  
+  }
 
   performChatLoginOrWarn = ( nick ) => {
       // jeśli PUSTA WARTOŚĆ lub POZA ZAKRESEM (trudne do wykonania)
@@ -85,6 +100,7 @@ class Chat extends React.Component {
         isLoggedInUser: true,
         isNicknameCorrect: true
       });  // przypisanie nazwy z formularza
+      this.saveToStorage('chat-nickname', nick);  // zapis w LS, dane są poprawane (jakość i długość nicku)
     }
   } // performChatLoginOrWarn-END
 
@@ -108,8 +124,14 @@ class Chat extends React.Component {
     });  // przypisanie nazwy z formularza
   }
 
-  clickHandleClickOnOuterBookmark = () => {
+  handleClickOnOuterBookmark = () => {
     this.setState({ isChatExpanded: !this.state.isChatExpanded });    // negowanie stanu pokazania okna chatu
+  }
+
+  handleEnterOrSpacebarOnOuterBookmark = ( event ) => {
+    if ( ( event.keyCode === 13 ) || ( event.keyCode === 32 ) ) { // [Enter] lub [spacja]
+      this.setState({ isChatExpanded: !this.state.isChatExpanded });    // negowanie stanu pokazania okna chatu
+    }
   }
 
   render() {
@@ -169,7 +191,7 @@ class Chat extends React.Component {
           </footer>
 
         </div>
-        <div className="outer-bookmark" onClick={ this.clickHandleClickOnOuterBookmark }>
+        <div className="outer-bookmark" tabIndex="0" onKeyUp={ this.handleEnterOrSpacebarOnOuterBookmark } onClick={ this.handleClickOnOuterBookmark }>
             { this.state.isChatExpanded ? "Zwiń" : "Rozwiń" } czat
         </div>
       </section>

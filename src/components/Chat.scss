@@ -138,9 +138,11 @@ $chat-max-width: 500px;
           margin-top: 0.5em;
           padding: 0.25em;
           color: $color-primary;
+          // border-width: 2px;
 
           &:hover {
             background-color: darken(white, 10);
+            // border-width: 2px;
           }
 
           &.bad-or-empty {
@@ -149,7 +151,7 @@ $chat-max-width: 500px;
 
             &:hover {
               background-color: darken($error-background-color, 3); // !!! nie można wywołać kolejnego lighten(), dla wartości oblicoznej z lighten() !!!
-              // background-color: red; / /bezpośrenią wartość lub zmienną wyświetli od razu 
+              // background-color: red; // zwykła lub bezpośrednia wartość lub zmienną wyświetli od razu w zmienionym stanie
             } 
           } // &.bad-or-empty-END
           
