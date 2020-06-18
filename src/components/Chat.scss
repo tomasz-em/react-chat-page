@@ -87,7 +87,7 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
     border-top-left-radius: 0.75em;
     border-top-right-radius: 0.75em;
 
-    p {
+    h5 {
       font-size: 1.25em;
     }
 
@@ -106,8 +106,8 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
 
         strong {
           font-size: 1.1em;
-          text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
-          color: #f0f000; // przykład
+          text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.7);
+          color: #f9f900; // przykład
           word-break: break-word; // !!! mogą być różne długie treści od użytkownika (np. te same znaki po sobie BEZ SPACJI!)
           overflow-wrap: break-word;  // lepsze, ale IE tego nie ogarnia
         }
@@ -142,14 +142,37 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
   footer {
     order: 3;
     background-color: $color-primary; /* rgba(100, 50, 20, 0.9); */
-    min-height: 11em;
-    flex-basis: 10em;
+    min-height: 13.25em;
+    flex-basis: 11em;
     border-bottom-left-radius: 0.75em;
     border-bottom-right-radius: 0.75em;
+
+    .chat-controls {
+      display: flex;
+      justify-content: space-between;
+      background-color: lighten($color-secondary, 20);
+
+      button {
+        flex-basis: 4em;
+        flex-grow: 1;
+        margin: 0.5em 1em;
+        padding: 0.2em 0.5em;
+        padding-bottom: 0;
+      }
+
+      button:first-of-type {
+        margin-left: 0.5em;
+      }
+
+      button:last-of-type {
+        margin-right: 0.5em;
+      }
+    }
 
     .nick-selection {
       position: relative;
       padding: 0.5em;
+      padding-top: 0;
       padding-bottom: 1em;
       min-height: 10em;
 
@@ -216,7 +239,8 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
 
       .nickname-error {
         position: absolute;
-        top: -4em;
+        z-index: 10;
+        top: -6.5em;
         // width: 90%;
         left: 0.5em;
         right: 0.5em;
@@ -227,18 +251,23 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
         border: 3px solid lighten($like-red, 5);
 
         @media #{$media-750w} {
-          top: -2.5em;
+          top: -5.5em;
         }
       } // .nickname-error-END
 
     } // .nick-selection-END
 
-    .chat-controls {
+    .message-sending {
       display: flex;
       flex-direction: column;
       background-color: $color-primary-lighten;
       padding: 0.5em;
       padding-bottom: 0.75em;
+
+      @media #{$media-750w} {
+        flex-direction: row;
+        align-items: center;
+      }
 
       .textarea {
           // width: 77%;
@@ -246,6 +275,7 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
           //margin-right: 5em;
         font-size: 1em;
         flex-grow: 2;
+        // flex
         height: 100%;
         min-height: 5em;
         border: 0px;
@@ -253,6 +283,7 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
         // outline: none;
         color: #111111; /* #d9a646; */
         background-color: lighten($color: $color-primary, $amount: 50);  /* transparent; */
+        overflow-y: hidden;
         resize: none;
       }
       
@@ -269,6 +300,12 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
         background: transparent;
         border: 2px solid #d9a646;
         // outline: none;
+
+        @media #{$media-750w} {
+          margin-top: 0.5em;
+          margin-left: 0.5em;
+          padding: 1.5em 0.25em;
+        }
       }
       
       .send-button:hover {
@@ -276,7 +313,7 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
         color: #fff;
         cursor: pointer;
       }
-    } // .chat-controls-END
+    } // .message-sending-END
 
    }  // footer-END
   } // .chat-END

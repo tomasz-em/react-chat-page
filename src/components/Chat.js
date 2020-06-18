@@ -3,6 +3,11 @@ import * as io from 'socket.io-client';
 
 import './Chat.scss';
 
+import trashcan16x16 from '../assets/img/trashcan16x16.png';  // ikony do przycików
+import alarm16x16_on from '../assets/img/alarm16x16-on.png';
+import alarm16x16_off from '../assets/img/alarm16x16-off.png';
+import info16x16dark from '../assets/img/info16x16-dark.png';
+
 class Chat extends React.Component {
   socket = null;
 
@@ -139,7 +144,7 @@ class Chat extends React.Component {
       <section className={ this.state.isChatExpanded ? "wrapper" : "wrapper moved" }>
         <div className="chat">
           <header>
-            <p>Szybki kontakt</p>
+            <h5>Szybki kontakt</h5>
 
             { this.state.isLoggedInUser && (  // warunkowe wyświetlenie "zalogowanego" i możliwości wylogowania
             <div className="logged-in-info">
@@ -165,6 +170,18 @@ class Chat extends React.Component {
 
           <footer>
             
+            <div className="chat-controls">
+              <button className= "icon-btn delete-all-messages" title="Usuń wszystkie wyświetlone wiadomości">
+                <img src={trashcan16x16} alt="usuń wszystkie wiadomości" />
+              </button>
+              <button className= "icon-btn sound-toggle" title="Powiadomienie dźwiękowe WŁĄCZONE">
+                <img src={alarm16x16_on} alt="sound / nosound" onClick={this.myfunction} />
+                </button>
+              <button className= "icon-btn more-info" title="Informacje">
+                <img src={info16x16dark} alt="infrmacje" onClick={this.myfunction} />
+              </button>
+            </div>
+
             { !this.state.isLoggedInUser && ( // wariant FALSE - warunkowe wyświetlanie dla NIEZALOGOWANEGO UŻYTKOWNIKA
             <div className="nick-selection">
               <p className="nick-info">Podaj swoje imię lub pseudonim aby pisać wiadomości. Obowiązkowo.</p>
@@ -180,7 +197,7 @@ class Chat extends React.Component {
             )}
 
             { this.state.isLoggedInUser && (  // - wariant TRUE - warunkowe wyświetlanie dla ZALOGOWANEGO/WPISANEGO użytkownika
-            <div className="chat-controls">
+            <div className="message-sending">
               <textarea className="textarea" ref="textarea" wrap="soft" maxLength={ this.messageMaxLength } placeholder="Zapytaj o ofertę...  &#13;&#10;(szybka wysyłka: [Shift] + [Enter])"
                 onKeyUp={ this.handleEnterPress } />
               <button onClick={ this.sendMessage } className="send-button">Wyślij</button>
