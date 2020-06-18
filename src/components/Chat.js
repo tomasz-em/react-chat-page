@@ -3,10 +3,12 @@ import * as io from 'socket.io-client';
 
 import './Chat.scss';
 
-import trashcan16x16 from '../assets/img/trashcan16x16.png';  // ikony do przycików
+import trashcan16x16 from '../assets/img/trashcan16x16.png';  // ikony do przycików: www.flaticon.com
 import alarm16x16_on from '../assets/img/alarm16x16-on.png';
 import alarm16x16_off from '../assets/img/alarm16x16-off.png';
 import info16x16dark from '../assets/img/info16x16-dark.png';
+
+import bell from '../assets/sound/notification.mp3'; // dźwięk powiadomienia i konwersja do mp3 z https://freesound.org/people/BeezleFM/sounds/512136/
 
 class Chat extends React.Component {
   socket = null;
@@ -18,12 +20,15 @@ class Chat extends React.Component {
     this.nicknameMinLength = 3;  // minimlana długość imienia/ksywki
     this.nicknameMaxLength = 25;  // maksymalna długość
     this.messageMaxLength = 250;  // ilośc znaków do wpisania na kliencie; ile przyjmuje serwer?
+    this.audioElem = new Audio( bell ); // wprost tworzenie elementu audio, bez budowania go poprzez React
+    this.soundUsedString = 'PLAY_SOUND';  // wartość TRUE jako "stała" dla WŁĄCZONEJ obsługi dźwięku w przeglądarce (bazując na LS)
 
     this.state = {
       authorId: '', // czyszczenie na starcie
       isChatExpanded: true,  // czy rozszrzony, czy zwiniety poza okno
       isLoggedInUser: false,  // czy jest "zalogowany" użytkownik
       isNicknameCorrect: true,
+      isSoundUsed: false,
       nickname: '', // do przechowywanie przed zalogowaniem; warto odczytać z zewnątrz: ciastka/localStorage
       messages: [
         // { text: string, authorId: number }
@@ -40,9 +45,11 @@ class Chat extends React.Component {
     this.socket.on('chat message', message => {
       this.state.messages.push(message);
       this.setState({ messages: this.state.messages });
+      if ( this.state.isSoundUsed ) this.audioElem.play();  // podpięcie powiadamiania dźwięowego po otrzymaniu nowej wiadomości
     });
 
     this.setState({ nickname: this.readAndCheckNicknameFromStorage('chat-nickname') }); // odczytanie zapamiętanego z localStorage (o ile istnieje)
+    this.setState({ isSoundUsed: this.readAndCheckSoundOptionsFromStorage('chat-sound') }); // odczytanie wartości konfiguracji zapamiętanej z localStorage (o ile istnieje)
   }
 
   sendMessage = () => {
@@ -80,6 +87,20 @@ class Chat extends React.Component {
     nick = nick.substring(0, this.nicknameMaxLength); // skrócenie do wymaganej postaci
     console.log("ODCZYTANO v0.3 z LS:", nick, "długość ciągu", nick.length);
     return nick;
+  }
+
+  readAndCheckSoundOptionsFromStorage = ( soundKey ) => {
+    let isSoundON = false;  // wstępnie zerowanie stanu
+    let soundOption = this.readFromStorage( soundKey );
+      if ( soundOption ) {  // isteniej jakaś wartość przekazana
+        isSoundON = soundOption.search( this.soundUsedString ); // poszukiwania konkretego ciągu, jako wartości TAK
+        console.log("ODCZYTANO v0.3 z LS:", soundOption, "treść na pozycji", isSoundON);
+        if ( isSoundON >= 0 ) isSoundON = true;  // !!! taki żywy eksperyment na zmienionym typie przechowywanej wartości
+        else isSoundON = false; // !!! zmieniam zawartośc zmiennej, której wartość wcześniej była testowana
+        console.log("ODCZYTANO v0.4 z LS:", soundOption, "treść JEST", isSoundON);
+      }
+    console.log("ODCZYTANO v0.5 z LS:", soundOption, "treść JEST", isSoundON);
+    return isSoundON;
   }
 
   saveToStorage = ( storageKey, storageValue ) => {
@@ -139,6 +160,13 @@ class Chat extends React.Component {
     }
   }
 
+  handleClickToToggleSound = () => {
+    if ( this.state.isSoundUsed ) this.saveToStorage('chat-sound', 'NOT_USED'); // dowolną treść lub brak wartości można podać (też czyścić zmienną)
+    if ( !this.state.isSoundUsed ) this.saveToStorage('chat-sound', this.soundUsedString );  // zapisanie do LS wartośc "TAK" - włączono obsługę dźwięku
+
+    this.setState({ isSoundUsed: !this.state.isSoundUsed });    // negowanie stanu używania powiadomień dźwiękowych
+  }
+
   render() {
     return (
       <section className={ this.state.isChatExpanded ? "wrapper" : "wrapper moved" }>
@@ -174,8 +202,9 @@ class Chat extends React.Component {
               <button className= "icon-btn delete-all-messages" title="Usuń wszystkie wyświetlone wiadomości">
                 <img src={trashcan16x16} alt="usuń wszystkie wiadomości" />
               </button>
-              <button className= "icon-btn sound-toggle" title="Powiadomienie dźwiękowe WŁĄCZONE">
-                <img src={alarm16x16_on} alt="sound / nosound" onClick={this.myfunction} />
+              <button className= "icon-btn sound-toggle" title={`Powiadomienie dźwiękowe jest ${ this.state.isSoundUsed ? "WŁĄCZONE" : "WYŁĄCZONE" }` }
+                onClick={ this.handleClickToToggleSound }>
+                <img src={ this.state.isSoundUsed ? alarm16x16_off : alarm16x16_on  } alt="sound / nosound" /> {/* warunkowo budowan treść etykieta - określa stan BIEŻĄCY */}
                 </button>
               <button className= "icon-btn more-info" title="Informacje">
                 <img src={info16x16dark} alt="infrmacje" onClick={this.myfunction} />
