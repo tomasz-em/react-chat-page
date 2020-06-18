@@ -31,7 +31,7 @@ class Chat extends React.Component {
       isSoundUsed: false,
       nickname: '', // do przechowywanie przed zalogowaniem; warto odczytać z zewnątrz: ciastka/localStorage
       messages: [
-        // { text: string, authorId: number }
+        // { authorId: string, text: string,  ...}  // można rozszerzać o dowolne atrybuty, które będą odesłane
       ]
     };
   }
@@ -46,6 +46,8 @@ class Chat extends React.Component {
       this.state.messages.push(message);
       this.setState({ messages: this.state.messages });
       if ( this.state.isSoundUsed ) this.audioElem.play();  // podpięcie powiadamiania dźwięowego po otrzymaniu nowej wiadomości
+      console.log("NOWA WIADOMOŚĆ", message); // dostajemy cztery atrybuty z wysłanych dwóch, np.
+      // {text: "TREŚĆ_WIADOMOŚCI?", authorId: "NAZWA_WYSYŁAJACEGO", id: "4lOKAit8Q6", timestamp: 1592494594068}
     });
 
     this.setState({ nickname: this.readAndCheckNicknameFromStorage('chat-nickname') }); // odczytanie zapamiętanego z localStorage (o ile istnieje)
@@ -73,12 +75,19 @@ class Chat extends React.Component {
     return isEmpty === 0;
   }
 
+  convertTimestampToHMSString = ( timestamp ) => {
+    const convertedDate = new Date( timestamp ); // tu to "prawdziwy" timestamp, czyli wyrażony w milisekundach (nie trzeba mnożyć przez 1k)
+    // return convertedDate.toUTCString() + " " + convertedDate.toLocaleString();  // po prostu godzina z dopełenieniem zerowym (jak w lokalnych ustawieniach komputera/przeglądarki) 
+    // zawsze dodaje zero przed "tekstem czasu", by potem dwa ostatnie znaki napisu tylko wyświetlić
+    return convertedDate.getHours() + ':' + ( "0" + convertedDate.getMinutes() ).substr(-2) + ':' + ( "0" + convertedDate.getSeconds() ).substr(-2);
+  }
+
   readFromStorage = ( storageKey ) => {
     let readValue = localStorage.getItem( storageKey );
     if ( !readValue ) readValue = ""; // null dla braku zapisania (odsłona bez wcześnejszego czatowania) 
     console.log("ODCZYTANO v0.1 z LS:", storageKey, readValue, "długość ciągu", readValue.length);
     readValue = readValue.trim(); // ewentualne cięcie śmieci
-    console.log("ODCZYTANO v0.1 z LS:", storageKey, readValue, "długość ciągu", readValue.length);
+    console.log("ODCZYTANO v0.2 z LS:", storageKey, readValue, "długość ciągu", readValue.length);
     return readValue;
   }
 
@@ -167,6 +176,10 @@ class Chat extends React.Component {
     this.setState({ isSoundUsed: !this.state.isSoundUsed });    // negowanie stanu używania powiadomień dźwiękowych
   }
 
+  handleClickToRemoveAllMessages = () => {
+    this.setState({ messages: [] });  // zerowanie istniejacej zawartości tablicy
+  }
+
   render() {
     return (
       <section className={ this.state.isChatExpanded ? "wrapper" : "wrapper moved" }>
@@ -183,12 +196,13 @@ class Chat extends React.Component {
 
           </header>
 
-          <section>
+          <section className="messages">
             {this.state.messages.map(message => (
               <div key={message.id} className="message">
+                <span className="time">{ this.convertTimestampToHMSString( message.timestamp ) } </span>
                 {message.authorId}:{' '}
                 {message.authorId === this.state.authorId ? (
-                  <span>{message.text}</span>
+                <span className="my-post">{message.text}</span>
                 ) : (
                     message.text
                   )}
@@ -199,7 +213,8 @@ class Chat extends React.Component {
           <footer>
             
             <div className="chat-controls">
-              <button className= "icon-btn delete-all-messages" title="Usuń wszystkie wyświetlone wiadomości">
+              <button className= "icon-btn delete-all-messages" title="Usuń wszystkie wyświetlone wiadomości"
+                onClick={ this.handleClickToRemoveAllMessages }>
                 <img src={trashcan16x16} alt="usuń wszystkie wiadomości" />
               </button>
               <button className= "icon-btn sound-toggle" title={`Powiadomienie dźwiękowe jest ${ this.state.isSoundUsed ? "WŁĄCZONE" : "WYŁĄCZONE" }` }
