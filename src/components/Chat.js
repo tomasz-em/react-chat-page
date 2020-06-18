@@ -2,6 +2,7 @@ import React from 'react';
 import * as io from 'socket.io-client';
 
 import './Chat.scss';
+import { Message } from './Message'
 
 import trashcan16x16 from '../assets/img/trashcan16x16.png';  // ikony do przycików: www.flaticon.com
 import alarm16x16_on from '../assets/img/alarm16x16-on.png';
@@ -73,13 +74,6 @@ class Chat extends React.Component {
     const isEmpty = someText.trim().length;
     // console.log(someText ,'pusty?', (isEmpty === 0) , 'długość ciągu',isEmpty);
     return isEmpty === 0;
-  }
-
-  convertTimestampToHMSString = ( timestamp ) => {
-    const convertedDate = new Date( timestamp ); // tu to "prawdziwy" timestamp, czyli wyrażony w milisekundach (nie trzeba mnożyć przez 1k)
-    // return convertedDate.toUTCString() + " " + convertedDate.toLocaleString();  // po prostu godzina z dopełenieniem zerowym (jak w lokalnych ustawieniach komputera/przeglądarki) 
-    // zawsze dodaje zero przed "tekstem czasu", by potem dwa ostatnie znaki napisu tylko wyświetlić
-    return convertedDate.getHours() + ':' + ( "0" + convertedDate.getMinutes() ).substr(-2) + ':' + ( "0" + convertedDate.getSeconds() ).substr(-2);
   }
 
   readFromStorage = ( storageKey ) => {
@@ -198,7 +192,9 @@ class Chat extends React.Component {
 
           <section className="messages">
             {this.state.messages.map(message => (
-              <div key={message.id} className="message">
+              <Message key={message.id} message={ message } authorId={ this.state.authorId } />
+
+/*               <div key={message.id} className="message">
                 <span className="time">{ this.convertTimestampToHMSString( message.timestamp ) } </span>
                 {message.authorId}:{' '}
                 {message.authorId === this.state.authorId ? (
@@ -207,7 +203,7 @@ class Chat extends React.Component {
                     message.text
                   )}
               </div>
-            ))}
+ */            ))}
           </section>
 
           <footer>

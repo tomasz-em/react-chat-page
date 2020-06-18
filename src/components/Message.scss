@@ -1,0 +1,26 @@
+@import '../sass/main.scss';
+
+
+.message {
+  border-bottom: 1px rgba(0, 0, 0, 0.07) dashed;
+  padding: 5px;
+  font-size: 12px;
+  word-break: break-word; // zabezpieczenia przed długimi treściami od użytkownika (BEZ SPACJI!)
+  overflow-wrap: break-word;  // lepsze, ale IE tego nie ogarnia
+
+
+  &:nth-child(2n) {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  .my-post {
+    color: rgba(0, 0, 0, 0.9);
+    font-weight: bold;
+  }
+
+  .time {
+    padding-left: -0.5em;
+    color: lighten($color: #000000, $amount: 30);
+  }
+
+} // .message-END

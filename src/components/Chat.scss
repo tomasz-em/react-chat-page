@@ -136,30 +136,7 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
     color: rgba(0, 0, 0, 0.7);
     overflow: auto;
 
-    .message {
-      border-bottom: 1px rgba(0, 0, 0, 0.07) dashed;
-      padding: 5px;
-      font-size: 12px;
-      word-break: break-word; // zabezpieczenia przed długimi treściami od użytkownika (BEZ SPACJI!)
-      overflow-wrap: break-word;  // lepsze, ale IE tego nie ogarnia
-
     
-      &:nth-child(2n) {
-        background-color: rgba(0, 0, 0, 0.05);
-      }
-
-      .my-post {
-        color: rgba(0, 0, 0, 0.9);
-        font-weight: bold;
-      }
-
-      .time {
-        padding-left: -0.5em;
-        color: lighten($color: #000000, $amount: 30);
-      }
-  
-    } // .message-END
-
 
   }
 
@@ -167,8 +144,8 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
   footer {
     order: 3;
     background-color: $color-primary; /* rgba(100, 50, 20, 0.9); */
-    min-height: 13.25em;
-    flex-basis: 11em;
+    min-height: 13.5em;
+    flex-basis: 11.5em;
     border-bottom-left-radius: 0.75em;
     border-bottom-right-radius: 0.75em;
 
@@ -180,9 +157,14 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
       button {
         flex-basis: 4em;
         flex-grow: 1;
-        margin: 0.5em 1em;
+        margin: 0.75em;
         padding: 0.2em 0.5em;
         padding-bottom: 0;
+
+/*         @media #{$media-750w} {
+          margin-top: 0.75em;
+        } */
+
       }
 
       button:first-of-type {
@@ -203,7 +185,7 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
 
       p {
         color: white;
-        padding: 0.5em 0;
+        padding: 0.25em 0;
         text-align: justify;
         text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
 
@@ -285,13 +267,15 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
     .message-sending {
       display: flex;
       flex-direction: column;
-      background-color: $color-primary-lighten;
-      padding: 0.5em;
+      // background-color: $color-primary-lighten;
+      padding: 0 0.5em;
       padding-bottom: 0.75em;
 
       @media #{$media-750w} {
         flex-direction: row;
         align-items: center;
+        padding-top: 0.25em;
+        // margin-top: 0.5em;
       }
 
       .textarea {
@@ -302,7 +286,7 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
         flex-grow: 2;
         // flex
         height: 100%;
-        min-height: 5em;
+        min-height: 6.75em;
         border: 0px;
         padding: 0.5em;
         // outline: none;
@@ -310,6 +294,10 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
         background-color: lighten($color: $color-primary, $amount: 50);  /* transparent; */
         overflow-y: hidden;
         resize: none;
+
+        @media #{$media-750w} {
+          min-height: 7.5em;
+        }
       }
       
       .send-button {
@@ -327,9 +315,9 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
         // outline: none;
 
         @media #{$media-750w} {
-          margin-top: 0.5em;
+          margin: 0;
           margin-left: 0.5em;
-          padding: 1.5em 0.25em;
+          padding: 2.7em 0.25em;
         }
       }
       
