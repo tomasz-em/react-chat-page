@@ -87,10 +87,6 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
     border-top-left-radius: 0.75em;
     border-top-right-radius: 0.75em;
 
-    h5 {
-      font-size: 1.25em;
-    }
-
     .logged-in-info {
       margin: 0.5em -0.6em;   // aby rozszerzyć na obszarze rodzica i ewentualeni zasłonić swoją treścią to co poniżej/dalej w wtreści
       padding: 0.5em;
@@ -150,9 +146,43 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
     border-bottom-right-radius: 0.75em;
 
     .chat-controls {
+      position: relative;
       display: flex;
       justify-content: space-between;
       background-color: lighten($color-secondary, 20);
+
+      .info-content {
+        position: absolute;
+        z-index: 10;
+        bottom: 3.4em;
+        left: 0.25em;
+        right: 0.25em;
+        padding: 0.4em;
+        border-radius: 0.3em;
+        background-color: $color-primary-lighten;
+        cursor: pointer;
+
+        h5 {
+          text-align: center;
+          margin-bottom: 0.5em;
+        }
+
+        img {
+          padding: 0.25em 0.5em;
+          background-color: #ddd;
+          vertical-align: middle;
+
+          @media #{$media-750w} {
+            //vertical-align: baseline;
+            margin-bottom: 0.25em;
+          }
+        }
+
+        p {
+          text-align: justify;
+        }
+
+      } // .info-content-END
 
       button {
         flex-basis: 4em;
@@ -160,11 +190,9 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
         margin: 0.75em;
         padding: 0.2em 0.5em;
         padding-bottom: 0;
-
 /*         @media #{$media-750w} {
           margin-top: 0.75em;
         } */
-
       }
 
       button:first-of-type {
@@ -174,7 +202,8 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
       button:last-of-type {
         margin-right: 0.5em;
       }
-    }
+
+    } // .chat-controls-END
 
     .nick-selection {
       position: relative;
@@ -246,7 +275,7 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
 
       .nickname-error {
         position: absolute;
-        z-index: 10;
+        z-index: 100;
         top: -6.5em;
         // width: 90%;
         left: 0.5em;

@@ -13,7 +13,7 @@ $text-light-hover: #cbd3da; // bootstrap: a.text-light:hover, a.text-light:focus
 // PODEJŚCIE FUNKCJONALNE DO KOLORÓW - wykorzystanie wcześniejszych definicji
 
 $color-primary: #3f3fe7;    // #1717a7
-$color-primary-lighten: lighten($color-primary, 30%);
+$color-primary-lighten: lighten($color-primary, 20%);
 $color-secondary: #1717a7;  // #3f3fe7
 // #1e5799 ; ##7db9e8
 

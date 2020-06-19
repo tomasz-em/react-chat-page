@@ -30,6 +30,7 @@ class Chat extends React.Component {
       isLoggedInUser: false,  // czy jest "zalogowany" użytkownik
       isNicknameCorrect: true,
       isSoundUsed: false,
+      isInfoContentExpanded: false,
       nickname: '', // do przechowywanie przed zalogowaniem; warto odczytać z zewnątrz: ciastka/localStorage
       messages: [
         // { authorId: string, text: string,  ...}  // można rozszerzać o dowolne atrybuty, które będą odesłane
@@ -174,6 +175,10 @@ class Chat extends React.Component {
     this.setState({ messages: [] });  // zerowanie istniejacej zawartości tablicy
   }
 
+  handleClickToToggleInfoContent = () => {
+    this.setState({ isInfoContentExpanded: !this.state.isInfoContentExpanded });  // przełączanie pokaż/ukryj obszaru inforamcyjnego
+  }
+
   render() {
     return (
       <section className={ this.state.isChatExpanded ? "wrapper" : "wrapper moved" }>
@@ -209,16 +214,32 @@ class Chat extends React.Component {
           <footer>
             
             <div className="chat-controls">
+              { this.state.isInfoContentExpanded && ( // pokaż zawartość gdy PRAWDA
+                <div className="info-content" onClick={ this.handleClickToToggleInfoContent } >
+                  <h5>Legenda</h5>
+                  <div>
+                    <img src={ trashcan16x16 } alt="usuwanie" title="skasuj wiadomości" /> &ndash; usuwa wszystkie wiadomości
+                  </div>
+                  <div>
+                    <img src={ alarm16x16_on  } alt="z dźwiękiem" title="włącz dźwięk powiadomienia" /> &ndash; włącza dźwięk przy nowej wiadomości
+                  </div>
+                  <div>
+                    <img src={ alarm16x16_off  } alt="bez dźwięku" title="wyłącz dźwięk powiadomienia" /> &ndash; wyłącza dźwięk powiadomienia
+                  </div>
+                  <hr />
+                  <p>Nie musisz się logować, by czytać wiadomości. Ostatnio użyta nazwa użytkownika i ustawienia dźwięku zapisują się w przeglądarce.</p>
+                </div>
+              )}
               <button className= "icon-btn delete-all-messages" title="Usuń wszystkie wyświetlone wiadomości"
                 onClick={ this.handleClickToRemoveAllMessages }>
                 <img src={trashcan16x16} alt="usuń wszystkie wiadomości" />
               </button>
               <button className= "icon-btn sound-toggle" title={`Powiadomienie dźwiękowe jest ${ this.state.isSoundUsed ? "WŁĄCZONE" : "WYŁĄCZONE" }` }
                 onClick={ this.handleClickToToggleSound }>
-                <img src={ this.state.isSoundUsed ? alarm16x16_off : alarm16x16_on  } alt="sound / nosound" /> {/* warunkowo budowan treść etykieta - określa stan BIEŻĄCY */}
+                <img src={ this.state.isSoundUsed ? alarm16x16_off : alarm16x16_on  } alt="dźwięk włączony / bez dźwieku" /> {/* warunkowo budowan treść etykieta - określa stan BIEŻĄCY */}
                 </button>
-              <button className= "icon-btn more-info" title="Informacje">
-                <img src={info16x16dark} alt="infrmacje" onClick={this.myfunction} />
+              <button className= "icon-btn more-info" title="Dodatkowe informacje, objaśnienia, legenda" onClick={ this.handleClickToToggleInfoContent } >
+                <img src={info16x16dark} alt="dodatkowe informacje" onClick={this.myfunction} />
               </button>
             </div>
 
