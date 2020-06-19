@@ -8,14 +8,42 @@
   word-break: break-word; // zabezpieczenia przed długimi treściami od użytkownika (BEZ SPACJI!)
   overflow-wrap: break-word;  // lepsze, ale IE tego nie ogarnia
 
+  &.my-message {
+    background-color:rgba(50, 50, 200, 0.15);  
+    // border: 2px solid $color-secondary;
+  }
 
   &:nth-child(2n) {
     background-color: rgba(0, 0, 0, 0.05);
   }
 
-  .my-post {
-    color: rgba(0, 0, 0, 0.9);
+  .delete-me {
+    font-size: 2em;
+    padding: 0 0.25em;
+    margin-left: -0.15em;
+    margin-right: 0.25em;
+    opacity: 0.5;
+    color: blue;
+    background-color:rgba(0, 0, 200, 0.1);
+    cursor: pointer;
+    transition: opacity 0.4s, color 0.3s, backround-color 0.5s;
+
+    &:hover {
+      opacity: 1;
+      color: red;
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .my-post-text {
+    color: rgba(0, 0, 50, 0.6);
     font-weight: bold;
+
+    &:hover {
+      cursor: pointer;
+      background-color: #eee;
+    }
+
   }
 
   .time {

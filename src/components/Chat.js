@@ -179,6 +179,17 @@ class Chat extends React.Component {
     this.setState({ isInfoContentExpanded: !this.state.isInfoContentExpanded });  // przełączanie pokaż/ukryj obszaru inforamcyjnego
   }
 
+  handleClickToDeleteGivenMessage = ( anyMessage ) => {
+    console.log("ZEWNĄTRZNE KLIKNIĘCIE!", anyMessage );
+
+    let messageListWithoutOneElement = this.state.messages.filter( ( messageFromList, index ) => {  // zwróć wszystkie pozostałe elementy poza wskazanym 
+        return anyMessage.id !== messageFromList.id;  // porównywanie atrybutów, by przypasować te dla których wartosćoi są inne -- by je zwrócić
+      }
+    );  // budowanie listy "zaktualizowanych" elementów, z wykluczeniem wskazanego (po atrybucie id wiadaomości czystka, bo indywidualny)
+
+    this.setState({ messages: messageListWithoutOneElement });  // użycie "nowej listy" jako aktualnie obowiązującej
+  } // handleClickToDeleteGivenMessage-END
+
   render() {
     return (
       <section className={ this.state.isChatExpanded ? "wrapper" : "wrapper moved" }>
@@ -197,7 +208,8 @@ class Chat extends React.Component {
 
           <section className="messages">
             {this.state.messages.map(message => (
-              <Message key={message.id} message={ message } authorId={ this.state.authorId } />
+              <Message key={message.id} message={ message } authorId={ this.state.authorId } 
+                onClick={ this.handleClickToDeleteGivenMessage } />
 
 /*               <div key={message.id} className="message">
                 <span className="time">{ this.convertTimestampToHMSString( message.timestamp ) } </span>
