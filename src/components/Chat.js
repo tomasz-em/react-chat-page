@@ -197,12 +197,18 @@ class Chat extends React.Component {
   handleClickToDeleteGivenMessage = ( anyMessage ) => {
     console.log("ZEWNĘTRZNE KLIKNIĘCIE!", anyMessage );
 
-    let messageListWithoutOneElement = this.state.messages.filter( ( messageFromList, index ) => {  // zwróć wszystkie pozostałe elementy poza wskazanym 
+      // uwzględnienie stanu edycji, gdy JEST WYŚWIETLANE okno edycji to kasowanie elementów jest ZABLOKOWANE ;)
+    if ( !this.state.isMessageEditingInProgress ) {
+      let messageListWithoutOneElement = this.state.messages.filter( ( messageFromList, index ) => {  // zwróć wszystkie pozostałe elementy poza wskazanym 
         return anyMessage.id !== messageFromList.id;  // porównywanie atrybutów, by przypasować te dla których wartosćoi są inne -- by je zwrócić
       }
     );  // budowanie listy "zaktualizowanych" elementów, z wykluczeniem wskazanego (po atrybucie id wiadaomości czystka, bo indywidualny)
 
     this.setState({ messages: messageListWithoutOneElement });  // użycie "nowej listy" jako aktualnie obowiązującej
+    }
+    else {
+      console.log("NIE USUNIĘTO! TRWA EDYCJA ELEMENTU.", anyMessage.text);
+    }
   } // handleClickToDeleteGivenMessage-END
 
   handleClickToPrepareMessageEditing = ( anyMessageID ) => {

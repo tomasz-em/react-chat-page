@@ -40,9 +40,11 @@ const Message = ( props ) => { // ({ message, authorId })
             <strong>{ message.authorId }</strong> o&nbsp;
             <strong className="time">{ convertTimestampToHMSString( message.timestamp ) }</strong>
           </p>
-          <p className={ ( message.authorId === authorId ) && ( message.localUserId === localUserId ) ? "my-post-text" : "" } 
-            onClick={ handleClickToEditMessage }>
+          <p className={ ( message.authorId === authorId ) && ( message.localUserId === localUserId ) ? "my-post-text" : "" } >
             { message.text }
+            { ( message.authorId === authorId ) && ( message.localUserId === localUserId ) && (
+              <button className="edit" onClick={ handleClickToEditMessage }>Edytuj</button>
+            )}
           </p>
         </div>
       </section>

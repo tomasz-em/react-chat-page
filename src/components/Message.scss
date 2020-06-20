@@ -71,10 +71,28 @@
           color: rgba(0, 0, 50, 0.6);
           font-weight: bold;
           transition: background-color 0.3s;
+          overflow: hidden;
       
           &:hover { 
-            cursor: pointer;
+            // cursor: pointer;
             background-color: lighten($color-primary, 25);
+
+            button {
+              background-color: white;
+            }
+          }
+
+          button {
+            float: right;
+            padding: 0.25em 0.5em;
+            background-color: lighten($color-primary, 25);
+
+            &:hover,
+            &:focus
+            {
+              background-color: white;
+              cursor: pointer;
+            }
           }
         } // &.my-post-text-END
       } // p-END
