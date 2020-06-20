@@ -1,68 +1,22 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Projekt końcowy
+### Aplikacja typu chat, wykonana z użyciem biblioteki _React_ w oparciu o przykłady. `2020`
 
-## Available Scripts
+## **Wersja demonstracyjna [https://react-chat-page.vercel.app/](https://react-chat-page.vercel.app/)**
 
-In the project directory, you can run:
+### Uruchomienie (wykorzytano skrypty uruchamiające z domyślnego pakietu *create-react-app*)
+**Oczywiście wymaga środowiska uruchomieniowego node!**
 
-### `npm start`
+* Wykonaj **instalację lokalną** dla podległych zaległości, z których korzysta ten projekt: `npm install`.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+* **Startuj poprzez** `npm start` - uruchomi się w trybie deweloperskim, co pozwala na łatwe testowanie i ewentualną edycję projektu.
+Po uruchomieniu aplikacja webowa wyświetli się w oknie domyślnej przeglądarki pod adresem [http://localhost:3000/](http://localhost:3000/).
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+UWAGA: witryna przeładowuje się na bieżąco podczas edycji plików źródłowych. Wszelkie błędy będą widoczne w konsoli oraz w aktywnym oknie przeglądarki www. Wtedy aplikacja nie skompiluje się, a także nie uruchomi się!
 
-### `npm test`
+UWAGA: w projekcie zawarto dodatkowy skrypt uruchamiający, który pozwala uruchomić aplikację reactową na komputerze z systemem operacyjnym _Windows_, w trybie deweloperskim na zmienionym porcie. Startuj poprzez `npm start:winport`, by uruchomić projekt w domyślnej przeglądarce po adresem [http://localhost:3636/](http://localhost:3636/)  
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* `npm test` startuje interaktywny tryb **uruchamiania testów**. 
 
-### `npm run build`
+* `npm run build` powoduje **zbudowanie aplikacji** dla celów *produkcyjnych*, wynik działania w folderze `build`.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+* Informacje o `npm run eject` oraz o wymienionych wcześniej skryptach zawiera w szczegółach [dokumentacja pakietu _create-react-app_](https://facebook.github.io/create-react-app/docs/).
