@@ -15,7 +15,7 @@ const Message = ( props ) => { // ({ message, authorId })
 
   let handleClickOnX = (event) => { // lokalna obsług akliknięcia.. ale wywoła metodę z komponentu rodzica dla wszanych parametrów wywołania
     if ( props.onClick ) {
-      console.log("ZDARZENIE_CLICK_MESSAGE", event);
+      // console.log("ZDARZENIE_CLICK_MESSAGE", event);
       props.onClick( message ); // wyślij zwrotnie obiekt konkretnej wiadomości (cztery atrybuty)
     }
    }
@@ -23,7 +23,7 @@ const Message = ( props ) => { // ({ message, authorId })
    let handleClickToEditMessage = (event) => {
      // onEdit={ this.handleClickToPrepareMessageEditing }
     if ( props.onEdit && message.localUserId === localUserId ) { // WERYFIKACJA, CZY TO WIADOMOŚĆ W SESJI TEGO SAMEGO UŻYTKOWNIKA
-      console.log("ZDARZENIE_CLICK_EDIT_MESSAGE", event);
+      // console.log("ZDARZENIE_CLICK_EDIT_MESSAGE", event);
       props.onEdit( message.id ); // wyślij zwrotnie wartość atrybutu dla tego obiektu wyrenderowanej wiadomości
     }
     

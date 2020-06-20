@@ -54,7 +54,7 @@ class Chat extends React.Component {
       this.state.messages.push(message);
       this.setState({ messages: this.state.messages });
       if ( this.state.isSoundUsed ) this.audioElem.play();  // podpięcie powiadamiania dźwięowego po otrzymaniu nowej wiadomości
-      console.log("NOWA WIADOMOŚĆ", message); // dostajemy cztery atrybuty z wysłanych dwóch, np.
+      // console.log("NOWA WIADOMOŚĆ", message); // dostajemy cztery atrybuty z wysłanych dwóch, np.
       // {text: "TREŚĆ_WIADOMOŚCI?", authorId: "NAZWA_WYSYŁAJACEGO", id: "4lOKAit8Q6", timestamp: 1592494594068}
     });
 
@@ -72,7 +72,7 @@ class Chat extends React.Component {
       };
       this.socket.emit('chat message', message);
       this.refs.textarea.value = '';
-      console.log("REFS",this.refs);
+      // console.log("REFS",this.refs);
     }
   }
 
@@ -91,43 +91,43 @@ class Chat extends React.Component {
   readFromStorage = ( storageKey ) => {
     let readValue = localStorage.getItem( storageKey );
     if ( !readValue ) readValue = ""; // null dla braku zapisania (odsłona bez wcześnejszego czatowania) 
-    console.log("ODCZYTANO v0.1 z LS:", storageKey, readValue, "długość ciągu", readValue.length);
+    // console.log("ODCZYTANO v0.1 z LS:", storageKey, readValue, "długość ciągu", readValue.length);
     readValue = readValue.trim(); // ewentualne cięcie śmieci
-    console.log("ODCZYTANO v0.2 z LS:", storageKey, readValue, "długość ciągu", readValue.length);
+    // console.log("ODCZYTANO v0.2 z LS:", storageKey, readValue, "długość ciągu", readValue.length);
     return readValue;
   }
 
   readAndCheckNicknameFromStorage = ( nicknameKey ) => {
     let nick = this.readFromStorage( nicknameKey );
     nick = nick.substring(0, this.nicknameMaxLength); // skrócenie do wymaganej postaci
-    console.log("ODCZYTANO v0.3 z LS:", nick, "długość ciągu", nick.length);
+    // console.log("ODCZYTANO v0.3 z LS:", nick, "długość ciągu", nick.length);
     return nick;
   }
 
   readAndCheckSoundOptionsFromStorage = ( soundKey ) => {
     let isSoundON = false;  // wstępnie zerowanie stanu
     let soundOption = this.readFromStorage( soundKey );
-      if ( soundOption ) {  // isteniej jakaś wartość przekazana
+      if ( soundOption ) {  // istnieje jakaś wartość przekazana
         isSoundON = soundOption.search( this.soundUsedString ); // poszukiwania konkretego ciągu, jako wartości TAK
-        console.log("ODCZYTANO v0.3 z LS:", soundOption, "treść na pozycji", isSoundON);
+        // console.log("ODCZYTANO v0.3 z LS:", soundOption, "treść na pozycji", isSoundON);
         if ( isSoundON >= 0 ) isSoundON = true;  // !!! taki żywy eksperyment na zmienionym typie przechowywanej wartości
         else isSoundON = false; // !!! zmieniam zawartośc zmiennej, której wartość wcześniej była testowana
-        console.log("ODCZYTANO v0.4 z LS:", soundOption, "treść JEST", isSoundON);
+        // console.log("ODCZYTANO v0.4 z LS:", soundOption, "treść JEST", isSoundON);
       }
-    console.log("ODCZYTANO v0.5 z LS:", soundOption, "treść JEST", isSoundON);
+    // console.log("ODCZYTANO v0.5 z LS:", soundOption, "treść JEST", isSoundON);
     return isSoundON;
   }
 
   saveToStorage = ( storageKey, storageValue ) => {
     // dane wejświowe powinny być poprawne (już po weryfikajci długości i zawartości), zatem można je od razu przechować
     localStorage.setItem( storageKey, storageValue );
-    console.log("zapisano wartości do LS", storageKey, storageValue);  
+    // console.log("zapisano wartości do LS", storageKey, storageValue);  
   }
 
   performChatLoginOrWarn = ( nick ) => {
       // jeśli PUSTA WARTOŚĆ lub POZA ZAKRESEM (trudne do wykonania)
     if ( this.isEmptyString( nick ) || ( nick.length < this.nicknameMinLength ) || ( nick.length > this.nicknameMaxLength ) ) { 
-      console.log('PUSTA lub BŁĘDNA WARTOŚĆ NICKU');
+      // console.log('PUSTA lub BŁĘDNA WARTOŚĆ NICKU');
       this.setState({ 
         isNicknameCorrect: false,
         nickname: nick.substring(0, this.nicknameMaxLength)  // przycinanie nazwy (o ile istnieje) do jakiegoś makskimum, gdyby jakimś trafem przeszło weryfikację
@@ -135,7 +135,7 @@ class Chat extends React.Component {
     }
     else { // AKCEPTOWALNA nazwa - ZEZWÓL NA ZALOGOWANIE
       const mySeed = Math.floor( Math.random() * 666666 ) + 1;
-      console.log('JEST NICK', nick, ', a Twój szczęśliwy numer to', mySeed);
+      // console.log('JEST NICK', nick, ', a Twój szczęśliwy numer to', mySeed);
       this.setState({ 
         authorId: nick,
         nickname: nick,   // dla potrzeb zapamiętania przed i po logowaniem
@@ -151,15 +151,15 @@ class Chat extends React.Component {
     if ( event.keyCode === 13 ) {  // przejmij dane, tylko jeśli naciśnięto [Enter] -- tu standardowo, bez modyfikatorów
       let nicknameFromInput = event.target.value.trim(); // obcięcie z ewentualnego nadmiaru pustych znaków
       this.performChatLoginOrWarn( nicknameFromInput ); // przeprowadzeni "zalogowania do czatu" lub komunikatu o złych danych wejściowych
-      console.log('Enter na',  event.target.name, event.target.innerText, ', treść odczytano bezpośrednio',  nicknameFromInput);
+      // console.log('Enter na',  event.target.name, event.target.innerText, ', treść odczytano bezpośrednio',  nicknameFromInput);
     }
   } // handleEnterOnNicknameInput-END
 
   handleClickToChatLogin = ( event ) => {
     let nicknameFromInput = this.refs.nickname.value.trim(); // obcięcie z ewentualnego nadmiaru pustych znaków
     this.performChatLoginOrWarn( nicknameFromInput ); // przeprowadzeni lokalnego "zalogowania" lub komunikatu o złych danych wejściowych
-    console.log('Kliknięto na', event.target.name, event.target.innerText, ', odczytano sąsiedni INPUT',  nicknameFromInput);
-    console.log("REFS: ", this.refs);
+    // console.log('Kliknięto na', event.target.name, event.target.innerText, ', odczytano sąsiedni INPUT',  nicknameFromInput);
+    // console.log("REFS: ", this.refs);
   } // handleClickToChatLogin-END
 
   handleClickToChatLogout = () => {
@@ -195,7 +195,7 @@ class Chat extends React.Component {
   }
 
   handleClickToDeleteGivenMessage = ( anyMessage ) => {
-    console.log("ZEWNĘTRZNE KLIKNIĘCIE!", anyMessage );
+    // console.log("ZEWNĘTRZNE KLIKNIĘCIE!", anyMessage );
 
       // uwzględnienie stanu edycji, gdy JEST WYŚWIETLANE okno edycji to kasowanie elementów jest ZABLOKOWANE ;)
     if ( !this.state.isMessageEditingInProgress ) {
@@ -206,14 +206,13 @@ class Chat extends React.Component {
 
     this.setState({ messages: messageListWithoutOneElement });  // użycie "nowej listy" jako aktualnie obowiązującej
     }
-    else {
-      console.log("NIE USUNIĘTO! TRWA EDYCJA ELEMENTU.", anyMessage.text);
-    }
+    /* else {
+      // console.log("NIE USUNIĘTO! TRWA EDYCJA ELEMENTU.", anyMessage.text);
+    } */
   } // handleClickToDeleteGivenMessage-END
 
   handleClickToPrepareMessageEditing = ( anyMessageID ) => {
-    console.log("ZEWNĘTRZNE KLIKNIĘCIE - PRZYGOTOWANIE DO EDYCJI", anyMessageID );
-
+    // console.log("ZEWNĘTRZNE KLIKNIĘCIE - PRZYGOTOWANIE DO EDYCJI", anyMessageID );
     const myMessage = this.state.messages.find( message => message.id === anyMessageID );  // poszukwianie zgodnej
     // this.currentMessageText = myMessage.text;  // przeklejenie bieżącej treści ze stanu do pamięci // pola edycyjnego
     // this.currentMessageId = myMessage.id; // przypisanie już drugiej wartości zmiennej... nie lepiej do stanu?
@@ -232,7 +231,7 @@ class Chat extends React.Component {
     const editedText = this.refs.textareaEdit.value.trim(); // wyciągniecie treści z wyświetlonego pola
 
     if ( isMessageStillPresent ) {  // wiadomość mogła zostać USUNIĘTA przez naciśnięcie na 'X'
-      console.log('WIADOMOŚĆ JEST NADAL OBECNA.', isMessageStillPresent,'"REFS:"', this.refs);
+      // console.log('WIADOMOŚĆ JEST NADAL OBECNA.', isMessageStillPresent,'"REFS:"', this.refs);
       // const editedText = this.refs.textareaEdit.value.trim(); // wyciągniecie treści z wyświetlonego pola
 
       const newListOfMessages = this.state.messages.map( message => {
@@ -255,7 +254,7 @@ class Chat extends React.Component {
 
     } // if-( isMessageStillPresent )-END
     else {
-      console.log('!!! BRAK_WIADOMOŚCI !!!', isMessageStillPresent, editedText,'USUNIĘTO PRZED ZATWIERDZENIEM EDYCJI. "REFS"', this.refs);
+      // console.log('!!! BRAK_WIADOMOŚCI !!!', isMessageStillPresent, editedText,'USUNIĘTO PRZED ZATWIERDZENIEM EDYCJI. "REFS"', this.refs);
       this.setState({   // usuwanie ze stanu BYŁYCH namiarów wiadmości do edytowania
         isMessageEditingInProgress: false,  // ukryj okno
         currentlyEditedMessageId: '', // likwidacja zapamiętanego identyfikatora do wszukania 
@@ -265,20 +264,20 @@ class Chat extends React.Component {
   } // confirmEditedMessage-END
 
   handleClickToConfirmMessageEditing = ( event ) => { // czy nie lepiej dołożyć funkcję inline do wyrażenia, by od razu z "render()" poleciało? 
-    console.log("ZATWIERDZANIE ZMIANY W EDYCJI - PRZYCISK/MYSZ", event );
+    // console.log("ZATWIERDZANIE ZMIANY W EDYCJI - PRZYCISK/MYSZ", event );
 
     this.confirmEditedMessage();
   } // handleClickToConfirmMessageEditing-END
 
   handleEnterPressToConfirmMessageEditing = ( event ) => {  // łatwiej wywołać przez funkcję "inline", ale w render() przy tym elemencie masa atrybutów
     if ( ( event.keyCode === 13 ) && ( event.shiftKey) ) {
-      console.log("ZATWIERDZANIE ZMIANY W EDYCJI Z TEXTAREA- KLAWIATURA", event );
+      // console.log("ZATWIERDZANIE ZMIANY W EDYCJI Z TEXTAREA- KLAWIATURA", event );
       this.confirmEditedMessage();
     }
   } // handleClickToConfirmMessageEditing-END
 
   handleClickToAbortMessageEditing = () => {
-    console.log("WYCOFYWANIE ZMIANY W EDYCJI");
+    // console.log("WYCOFYWANIE ZMIANY W EDYCJI");
     this.setState({ isMessageEditingInProgress: false });  // nie rób nic, po prostu zwiń to okno z edycją
   }
 
@@ -316,7 +315,10 @@ class Chat extends React.Component {
                   <h5>Edycja wiadomości</h5>
                   <textarea className="textarea" ref="textareaEdit" wrap="soft" maxLength={ this.messageMaxLength } placeholder="[Nowa treść istniejącej wiadomności]"
                     defaultValue={ this.state.currentlyEditedMessageText } onKeyUp={ this.handleEnterPressToConfirmMessageEditing } ></textarea>
-                  <p>Możesz użyć [Enter] + [Shift] by zatwierdzić od razu zmiany, edytowane powyżej.</p>
+                  <p>
+                    <img src={ info16x16dark } alt="dodatkowe informacje" />
+                    Możesz użyć [Enter] + [Shift] by zatwierdzić od razu zmiany, edytowane powyżej.
+                    </p>
                   <div>
                     <button className="confirm-button" onClick={ this.handleClickToConfirmMessageEditing } >Zatwierdź</button>
                     <button className="abort-button" onClick={ this.handleClickToAbortMessageEditing }>Odrzuć</button>

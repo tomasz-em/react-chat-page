@@ -183,6 +183,13 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
           }
         }
 
+        img {
+          padding: 0.25em 0.5em;
+          margin-right: 0.5em;
+          background-color: #ddd;
+          vertical-align: middle;
+        }
+
         div {
           display: flex;
 
