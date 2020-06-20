@@ -19,7 +19,7 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
     position: absolute;
     z-index: 900;
     top: -3em;
-    right: 5px;
+    right: 0px;
     width: 300px;
     height: 120vh;
     min-height: 600px;  // dodano, by obszar wokół (kontener) był zawsze wyższy niż 500px chatu
@@ -149,6 +149,54 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
       justify-content: space-between;
       background-color: lighten($color-secondary, 20);
 
+      .message-edit {
+        position: absolute;
+        z-index: 15;
+        bottom: 5.5em;
+        left: 1em;
+        right: 1em;
+        padding: 0.5em;
+        padding-bottom: 0.5em;
+        border-radius: 0.3em;
+        border: 2px solid $color-primary;
+        box-shadow: 0px 0px 4px 3px rgba(255, 255, 255, 0.8);
+        background-color: $color-primary-lighten;
+        // cursor: pointer;
+
+        @media #{$media-750w} {
+          bottom: 4.5em;
+          // left: 0.5em;
+          right: 2em;
+        }
+
+        h5 {
+          text-align: center;
+        }
+
+        textarea {
+          min-height: 6.75em;
+          margin: 1em 0;
+          resize: none;
+
+          @media #{$media-750w} {
+            min-height: 7.75em;
+          }
+        }
+
+        div {
+          display: flex;
+
+          button {
+            margin: 1em 0;
+          }
+
+          button:first-of-type {
+            margin-right: 1em;
+          }
+        }
+
+      } // .message-edit-END
+
       .info-content {
         position: absolute;
         z-index: 10;
@@ -159,6 +207,8 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
         padding-bottom: 0.5em;
         border-radius: 0.3em;
         background-color: $color-primary-lighten;
+        border: 2px solid $color-primary;
+        box-shadow: 0px 0px 3px 3px rgba(255, 255, 255, 0.8);
         cursor: pointer;
 
         @media #{$media-750w} {
@@ -325,8 +375,8 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
         border: 0px;
         padding: 0.5em;
         // outline: none;
-        color: #111111; /* #d9a646; */
-        background-color: lighten($color: $color-primary, $amount: 50);  /* transparent; */
+        color: $text-color-darker; // #111111; /* #d9a646; */
+        // background-color: lighten($color: $color-primary, $amount: 50);  /* transparent; */
         overflow-y: hidden;
         resize: none;
 

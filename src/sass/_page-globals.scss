@@ -53,6 +53,11 @@ button
     }    
 }   // (input, textarea, button)-END
 
+textarea {
+    display: block;
+    width: 100%;
+}
+
 input[type="text"] {
     border-width: 2px;  // bez tego w IE zmienia się wysokość elementu, gdy ":hover"
     background-color: $color-background-default-input;   // start: "rgb(239, 239, 239);"

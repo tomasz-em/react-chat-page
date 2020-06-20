@@ -20,6 +20,15 @@ const Message = ( props ) => { // ({ message, authorId })
     }
    }
 
+   let handleClickToEditMessage = (event) => {
+     // onEdit={ this.handleClickToPrepareMessageEditing }
+    if ( props.onEdit && message.localUserId === localUserId ) { // WERYFIKACJA, CZY TO WIADOMOŚĆ W SESJI TEGO SAMEGO UŻYTKOWNIKA
+      console.log("ZDARZENIE_CLICK_EDIT_MESSAGE", event);
+      props.onEdit( message.id ); // wyślij zwrotnie wartość atrybutu dla tego obiektu wyrenderowanej wiadomości
+    }
+    
+   }
+
   return (
     <article className="message" >
       <section>
@@ -31,7 +40,8 @@ const Message = ( props ) => { // ({ message, authorId })
             <strong>{ message.authorId }</strong> o&nbsp;
             <strong className="time">{ convertTimestampToHMSString( message.timestamp ) }</strong>
           </p>
-          <p className={ ( message.authorId === authorId ) && ( message.localUserId === localUserId ) ? "my-post-text" : "" } >
+          <p className={ ( message.authorId === authorId ) && ( message.localUserId === localUserId ) ? "my-post-text" : "" } 
+            onClick={ handleClickToEditMessage }>
             { message.text }
           </p>
         </div>

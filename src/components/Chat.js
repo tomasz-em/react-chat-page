@@ -23,6 +23,8 @@ class Chat extends React.Component {
     this.messageMaxLength = 250;  // ilośc znaków do wpisania na kliencie; ile przyjmuje serwer?
     this.audioElem = new Audio( bell ); // wprost tworzenie elementu audio, bez budowania go poprzez React
     this.soundUsedString = 'PLAY_SOUND';  // wartość TRUE jako "stała" dla WŁĄCZONEJ obsługi dźwięku w przeglądarce (bazując na LS)
+    // this.currentMessageText = ''; // na treść bieżącej wiadomości do edytowania
+    // this.currentMessageId = '';
 
     this.state = {
       authorId: '', // czyszczenie na starcie
@@ -31,6 +33,9 @@ class Chat extends React.Component {
       isNicknameCorrect: true,
       isSoundUsed: false,
       isInfoContentExpanded: false,
+      isMessageEditingInProgress: false,
+      currentlyEditedMessageText: '', // treśc edytowanej wiadomości PO jej WSKAZANIU
+      currentlyEditedMessageId: '', // identyfikator wiadomości, ZGŁOSZONEJ do edytowania
       localUserId: 0,  // do weryfikowania "toższamości lokalnej", czyli by nie podszywać się pod inne loginy i nie edytować "czyichś" wiadomości
       nickname: '', // do przechowywanie przed zalogowaniem; warto odczytać z zewnątrz: ciastka/localStorage
       messages: [
@@ -59,7 +64,7 @@ class Chat extends React.Component {
 
   sendMessage = () => {
     const text = this.refs.textarea.value.trim();
-    if (text) {
+    if ( text ) {
       const message = { 
         text,
         authorId: this.state.authorId,
@@ -67,6 +72,7 @@ class Chat extends React.Component {
       };
       this.socket.emit('chat message', message);
       this.refs.textarea.value = '';
+      console.log("REFS",this.refs);
     }
   }
 
@@ -152,7 +158,8 @@ class Chat extends React.Component {
   handleClickToChatLogin = ( event ) => {
     let nicknameFromInput = this.refs.nickname.value.trim(); // obcięcie z ewentualnego nadmiaru pustych znaków
     this.performChatLoginOrWarn( nicknameFromInput ); // przeprowadzeni lokalnego "zalogowania" lub komunikatu o złych danych wejściowych
-    console.log('Kliknięto na',  event.target.name, event.target.innerText, ', odczytano sąsiedni INPUT',  nicknameFromInput);
+    console.log('Kliknięto na', event.target.name, event.target.innerText, ', odczytano sąsiedni INPUT',  nicknameFromInput);
+    console.log("REFS: ", this.refs);
   } // handleClickToChatLogin-END
 
   handleClickToChatLogout = () => {
@@ -188,7 +195,7 @@ class Chat extends React.Component {
   }
 
   handleClickToDeleteGivenMessage = ( anyMessage ) => {
-    console.log("ZEWNĄTRZNE KLIKNIĘCIE!", anyMessage );
+    console.log("ZEWNĘTRZNE KLIKNIĘCIE!", anyMessage );
 
     let messageListWithoutOneElement = this.state.messages.filter( ( messageFromList, index ) => {  // zwróć wszystkie pozostałe elementy poza wskazanym 
         return anyMessage.id !== messageFromList.id;  // porównywanie atrybutów, by przypasować te dla których wartosćoi są inne -- by je zwrócić
@@ -197,6 +204,77 @@ class Chat extends React.Component {
 
     this.setState({ messages: messageListWithoutOneElement });  // użycie "nowej listy" jako aktualnie obowiązującej
   } // handleClickToDeleteGivenMessage-END
+
+  handleClickToPrepareMessageEditing = ( anyMessageID ) => {
+    console.log("ZEWNĘTRZNE KLIKNIĘCIE - PRZYGOTOWANIE DO EDYCJI", anyMessageID );
+
+    const myMessage = this.state.messages.find( message => message.id === anyMessageID );  // poszukwianie zgodnej
+    // this.currentMessageText = myMessage.text;  // przeklejenie bieżącej treści ze stanu do pamięci // pola edycyjnego
+    // this.currentMessageId = myMessage.id; // przypisanie już drugiej wartości zmiennej... nie lepiej do stanu?
+
+    if ( !this.state.isMessageEditingInProgress ) { // EDYTUJ, jeśli nie trwa edytowanie innej wiadomości
+      this.setState({ 
+        isMessageEditingInProgress: true,
+        currentlyEditedMessageText: myMessage.text,
+        currentlyEditedMessageId: myMessage.id
+      });  // PRAWDA, zatem pokaż okno edycji
+    }
+  }
+
+  confirmEditedMessage = () => {
+    let isMessageStillPresent = this.state.messages.find( message => message.id === this.state.currentlyEditedMessageId );
+    const editedText = this.refs.textareaEdit.value.trim(); // wyciągniecie treści z wyświetlonego pola
+
+    if ( isMessageStillPresent ) {  // wiadomość mogła zostać USUNIĘTA przez naciśnięcie na 'X'
+      console.log('WIADOMOŚĆ JEST NADAL OBECNA.', isMessageStillPresent,'"REFS:"', this.refs);
+      // const editedText = this.refs.textareaEdit.value.trim(); // wyciągniecie treści z wyświetlonego pola
+
+      const newListOfMessages = this.state.messages.map( message => {
+      if ( message.id === this.state.currentlyEditedMessageId ) {  // jeśli jest przypasowanie do poszukwianej... to zmień TYLKO jej tekst
+        const updatedMessage = {  // destrukturyzacja OBIEKTU, będącego elementem tablicy!
+          ...message,
+          text: editedText
+        };
+        return updatedMessage; // zwrotka podmienionego elementu, ze zmienionym atrybutem!
+      }
+      return message; // każdy "inny" element listy, niż ten już zmodyfikowany
+      });
+ 
+    this.setState({ 
+      messages: newListOfMessages,  // aktualizacja listy elementów
+      isMessageEditingInProgress: false,  // ukryj okno
+      currentlyEditedMessageId: '', // zapomnij o edycyjnych atrybuctach "Id" i "text"
+      currentlyEditedMessageText: ''
+     });
+
+    } // if-( isMessageStillPresent )-END
+    else {
+      console.log('!!! BRAK_WIADOMOŚCI !!!', isMessageStillPresent, editedText,'USUNIĘTO PRZED ZATWIERDZENIEM EDYCJI. "REFS"', this.refs);
+      this.setState({   // usuwanie ze stanu BYŁYCH namiarów wiadmości do edytowania
+        isMessageEditingInProgress: false,  // ukryj okno
+        currentlyEditedMessageId: '', // likwidacja zapamiętanego identyfikatora do wszukania 
+        currentlyEditedMessageText: ''  // likiwdacj utrzymywanej wartości oryginału
+      });
+    } // if-( isMessageStillPresent )-else-END
+  } // confirmEditedMessage-END
+
+  handleClickToConfirmMessageEditing = ( event ) => { // czy nie lepiej dołożyć funkcję inline do wyrażenia, by od razu z "render()" poleciało? 
+    console.log("ZATWIERDZANIE ZMIANY W EDYCJI - PRZYCISK/MYSZ", event );
+
+    this.confirmEditedMessage();
+  } // handleClickToConfirmMessageEditing-END
+
+  handleEnterPressToConfirmMessageEditing = ( event ) => {  // łatwiej wywołać przez funkcję "inline", ale w render() przy tym elemencie masa atrybutów
+    if ( ( event.keyCode === 13 ) && ( event.shiftKey) ) {
+      console.log("ZATWIERDZANIE ZMIANY W EDYCJI Z TEXTAREA- KLAWIATURA", event );
+      this.confirmEditedMessage();
+    }
+  } // handleClickToConfirmMessageEditing-END
+
+  handleClickToAbortMessageEditing = () => {
+    console.log("WYCOFYWANIE ZMIANY W EDYCJI");
+    this.setState({ isMessageEditingInProgress: false });  // nie rób nic, po prostu zwiń to okno z edycją
+  }
 
   render() {
     return (
@@ -215,25 +293,31 @@ class Chat extends React.Component {
           </header>
 
           <section className="messages">
+
             { this.state.messages.map( message => (
               <Message key={message.id} message={ message } authorId={ this.state.authorId } localUserId={ this.state.localUserId } 
-                onClick={ this.handleClickToDeleteGivenMessage } />
+                onClick={ this.handleClickToDeleteGivenMessage } onEdit={ this.handleClickToPrepareMessageEditing } />
+            ))}
 
-/*               <div key={message.id} className="message">
-                <span className="time">{ this.convertTimestampToHMSString( message.timestamp ) } </span>
-                {message.authorId}:{' '}
-                {message.authorId === this.state.authorId ? (
-                <span className="my-post">{message.text}</span>
-                ) : (
-                    message.text
-                  )}
-              </div>
- */            ))}
           </section>
 
           <footer>
             
             <div className="chat-controls">
+
+            { this.state.isMessageEditingInProgress && (  // pokaż edytowanie, gdy PRAWDA
+                <div className="message-edit" >
+                  <h5>Edycja wiadomości</h5>
+                  <textarea className="textarea" ref="textareaEdit" wrap="soft" maxLength={ this.messageMaxLength } placeholder="[Nowa treść istniejącej wiadomności]"
+                    defaultValue={ this.state.currentlyEditedMessageText } onKeyUp={ this.handleEnterPressToConfirmMessageEditing } ></textarea>
+                  <p>Możesz użyć [Enter] + [Shift] by zatwierdzić od razu zmiany, edytowane powyżej.</p>
+                  <div>
+                    <button className="confirm-button" onClick={ this.handleClickToConfirmMessageEditing } >Zatwierdź</button>
+                    <button className="abort-button" onClick={ this.handleClickToAbortMessageEditing }>Odrzuć</button>
+                  </div>
+                </div>
+              )}
+
               { this.state.isInfoContentExpanded && ( // pokaż zawartość gdy PRAWDA
                 <div className="info-content" onClick={ this.handleClickToToggleInfoContent } >
                   <h5>Legenda</h5>
@@ -252,6 +336,7 @@ class Chat extends React.Component {
                   <p>Możesz edytować wiadomości utworzone przez siebie w danej sesji czatowania.</p>
                 </div>
               )}
+
               <button className= "icon-btn delete-all-messages" title="Usuń wszystkie wyświetlone wiadomości"
                 onClick={ this.handleClickToRemoveAllMessages }>
                 <img src={ trashcan16x16 } alt="usuń wszystkie wiadomości" />
