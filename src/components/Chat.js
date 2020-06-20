@@ -31,6 +31,7 @@ class Chat extends React.Component {
       isNicknameCorrect: true,
       isSoundUsed: false,
       isInfoContentExpanded: false,
+      localUserId: 0,  // do weryfikowania "toższamości lokalnej", czyli by nie podszywać się pod inne loginy i nie edytować "czyichś" wiadomości
       nickname: '', // do przechowywanie przed zalogowaniem; warto odczytać z zewnątrz: ciastka/localStorage
       messages: [
         // { authorId: string, text: string,  ...}  // można rozszerzać o dowolne atrybuty, które będą odesłane
@@ -59,7 +60,11 @@ class Chat extends React.Component {
   sendMessage = () => {
     const text = this.refs.textarea.value.trim();
     if (text) {
-      const message = { text, authorId: this.state.authorId };
+      const message = { 
+        text,
+        authorId: this.state.authorId,
+        localUserId: this.state.localUserId   // dodanie nowego atrybutu do wysyłki
+      };
       this.socket.emit('chat message', message);
       this.refs.textarea.value = '';
     }
@@ -122,13 +127,15 @@ class Chat extends React.Component {
         nickname: nick.substring(0, this.nicknameMaxLength)  // przycinanie nazwy (o ile istnieje) do jakiegoś makskimum, gdyby jakimś trafem przeszło weryfikację
        });
     }
-    else { // AKCEPTOWALNA nazwa
-      console.log('JEST NICK', nick);
+    else { // AKCEPTOWALNA nazwa - ZEZWÓL NA ZALOGOWANIE
+      const mySeed = Math.floor( Math.random() * 666666 ) + 1;
+      console.log('JEST NICK', nick, ', a Twój szczęśliwy numer to', mySeed);
       this.setState({ 
         authorId: nick,
-        nickname: nick,   // czy ten atrybyt jest konieczny, czy trzymać się nazwy użytkownika?
+        nickname: nick,   // dla potrzeb zapamiętania przed i po logowaniem
         isLoggedInUser: true,
-        isNicknameCorrect: true
+        isNicknameCorrect: true,
+        localUserId: mySeed   // wylosowany właśnie numer
       });  // przypisanie nazwy z formularza
       this.saveToStorage('chat-nickname', nick);  // zapis w LS, dane są poprawane (jakość i długość nicku)
     }
@@ -150,7 +157,8 @@ class Chat extends React.Component {
 
   handleClickToChatLogout = () => {
     this.setState({ 
-      isLoggedInUser: false // stan na wylogowany, ale nazwa użytkowika nie jest usuwana z pamięci
+      isLoggedInUser: false, // stan na wylogowany, ale nazwa użytkowika nie jest usuwana z pamięci
+      localUserId: 0  // zerowany jest "nr identyfikacyjny" dla rozróżniania własnych postów
     });  // przypisanie nazwy z formularza
   }
 
@@ -207,8 +215,8 @@ class Chat extends React.Component {
           </header>
 
           <section className="messages">
-            {this.state.messages.map(message => (
-              <Message key={message.id} message={ message } authorId={ this.state.authorId } 
+            { this.state.messages.map( message => (
+              <Message key={message.id} message={ message } authorId={ this.state.authorId } localUserId={ this.state.localUserId } 
                 onClick={ this.handleClickToDeleteGivenMessage } />
 
 /*               <div key={message.id} className="message">
@@ -239,19 +247,21 @@ class Chat extends React.Component {
                     <img src={ alarm16x16_off  } alt="bez dźwięku" title="wyłącz dźwięk powiadomienia" /> &ndash; wyłącza dźwięk powiadomienia
                   </div>
                   <hr />
-                  <p>Nie musisz się logować, by czytać wiadomości. Ostatnio użyta nazwa użytkownika i ustawienia dźwięku zapisują się w przeglądarce.</p>
+                  <p>Przeglądarka zachowuje ostatnio użytą nazwę użytkownika i ustawienia dźwięku.</p>
+                  <hr />
+                  <p>Możesz edytować wiadomości utworzone przez siebie w danej sesji czatowania.</p>
                 </div>
               )}
               <button className= "icon-btn delete-all-messages" title="Usuń wszystkie wyświetlone wiadomości"
                 onClick={ this.handleClickToRemoveAllMessages }>
-                <img src={trashcan16x16} alt="usuń wszystkie wiadomości" />
+                <img src={ trashcan16x16 } alt="usuń wszystkie wiadomości" />
               </button>
               <button className= "icon-btn sound-toggle" title={`Powiadomienie dźwiękowe jest ${ this.state.isSoundUsed ? "WŁĄCZONE" : "WYŁĄCZONE" }` }
                 onClick={ this.handleClickToToggleSound }>
                 <img src={ this.state.isSoundUsed ? alarm16x16_off : alarm16x16_on  } alt="dźwięk włączony / bez dźwieku" /> {/* warunkowo budowan treść etykieta - określa stan BIEŻĄCY */}
                 </button>
               <button className= "icon-btn more-info" title="Dodatkowe informacje, objaśnienia, legenda" onClick={ this.handleClickToToggleInfoContent } >
-                <img src={info16x16dark} alt="dodatkowe informacje" onClick={this.myfunction} />
+                <img src={ info16x16dark } alt="dodatkowe informacje" />
               </button>
             </div>
 
