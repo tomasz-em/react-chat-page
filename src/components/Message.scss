@@ -3,52 +3,84 @@
 
 .message {
   border-bottom: 1px rgba(0, 0, 0, 0.07) dashed;
-  padding: 5px;
-  font-size: 12px;
-  word-break: break-word; // zabezpieczenia przed długimi treściami od użytkownika (BEZ SPACJI!)
+  padding: 0.45em;
+  font-size: 0.875em;
+  word-break: break-all; // zabezpieczenia przed długimi treściami od użytkownika (BEZ SPACJI!), działa w IE
   overflow-wrap: break-word;  // lepsze, ale IE tego nie ogarnia
-
-  &.my-message {
-    background-color:rgba(50, 50, 200, 0.15);  
-    // border: 2px solid $color-secondary;
-  }
 
   &:nth-child(2n) {
     background-color: rgba(0, 0, 0, 0.05);
   }
 
-  .delete-me {
-    font-size: 2em;
-    padding: 0 0.25em;
-    margin-left: -0.15em;
-    margin-right: 0.25em;
-    opacity: 0.5;
-    color: blue;
-    background-color:rgba(0, 0, 200, 0.1);
-    cursor: pointer;
-    transition: opacity 0.4s, color 0.3s, backround-color 0.5s;
+  section {
+    display: flex;
+    // background-color: lightgreen;
+    justify-content: space-between;
+    align-content: flex-start;
 
-    &:hover {
-      opacity: 1;
-      color: red;
-      background-color: rgba(0, 0, 0, 0.2);
-    }
-  }
-
-  .my-post-text {
-    color: rgba(0, 0, 50, 0.6);
-    font-weight: bold;
-
-    &:hover {
+    .delete-me {
+      /* flex-basis: 2em; */  // !!! niepotrzebne, więcej z tym problemów w IE !!!
+      justify-self: flex-start;
+      //align-content: ;
+      font-size: 2.5em;
+      padding: 0 0.25em;
+      margin-left: -0.15em;
+      margin-right: 0.2em;
+      opacity: 0.5;
+      max-width: 1em;
+      max-height: 1em;
+      line-height: 1em;
+      color: blue;
+      background-color:rgba(0, 0, 200, 0.1);
+      border-radius: 0.1em;
       cursor: pointer;
-      background-color: #eee;
-    }
+      transition: opacity 0.4s, color 0.3s, backround-color 0.5s;
+  
+      &:hover {
+        opacity: 1;
+        color: red;
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+    } // .detete-me
 
-  }
+    .message-container {
+      flex-grow: 2;
 
-  .time {
-    padding-left: -0.5em;
-    color: lighten($color: #000000, $amount: 30);
-  }
+      &.my-message {
+        background-color:rgba(50, 50, 200, 0.05);
+        border: 2px solid rgba(50, 50, 200, 0.2);
+        border-radius: 0.25em;
+      }
+      
+      p {
+        padding: 0.25em;
+        color: rgba(0, 0, 0, 0.9);
+
+        &.author {
+          color: rgba(0, 0, 0, 0.7);
+          // background-color: moccasin;
+
+          strong.time {
+            background-color: #ccc;
+            padding-left: 0.25em;
+            padding-right: 0.25em;
+          }
+        } // &.author-END
+  
+        &.my-post-text {
+          color: rgba(0, 0, 50, 0.6);
+          font-weight: bold;
+          transition: background-color 0.3s;
+      
+          &:hover { 
+            cursor: pointer;
+            background-color: lighten($color-primary, 25);
+          }
+        } // &.my-post-text-END
+      } // p-END
+
+    } // .message-container-END
+
+  } // section-END
 
 } // .message-END

@@ -91,8 +91,8 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
       margin: 0.5em -0.6em;   // aby rozszerzyć na obszarze rodzica i ewentualeni zasłonić swoją treścią to co poniżej/dalej w wtreści
       padding: 0.5em;
       background-color: $color-primary;
-      word-break: break-word;  // automatyczne łamanie do nowej linii dla długich wyrazów | alternatywnie "overflow-wrap: break-word", ale mniejsze wsparcie
-      overflow-wrap: break-word;  // nie dla IE
+      word-break: break-all;  // automatyczne łamanie do nowej linii dla długich wyrazów | alternatywnie "overflow-wrap: break-word", ale mniejsze wsparcie
+      overflow-wrap: break-word;  // nie dla IE, ale radzi sobie świetnie z "word-break: break-all;"
 
       @media #{$media-750w} {
         padding-right: 5em; // prawy +4.5 względem standardu!
@@ -104,8 +104,8 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
           font-size: 1.1em;
           text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.7);
           color: #f9f900; // przykład
-          word-break: break-word; // !!! mogą być różne długie treści od użytkownika (np. te same znaki po sobie BEZ SPACJI!)
-          overflow-wrap: break-word;  // lepsze, ale IE tego nie ogarnia
+          word-break: break-all; // !!! mogą być różne długie treści od użytkownika (np. te same znaki po sobie BEZ SPACJI!)
+          overflow-wrap: break-word;  // lepsze, ale IE tego nie ogarnia (tam jest: "word-break: break-all;")
         }
       } // span-END
 
@@ -129,11 +129,7 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
     flex-basis: 100%;
     padding: 0.25em;
     background-color: #fff;
-    color: rgba(0, 0, 0, 0.7);
     overflow: auto;
-
-    
-
   }
 
 
@@ -156,11 +152,17 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
         z-index: 10;
         bottom: 3.4em;
         left: 0.25em;
-        right: 0.25em;
+        right: 0.75em;
         padding: 0.4em;
         border-radius: 0.3em;
         background-color: $color-primary-lighten;
         cursor: pointer;
+
+        @media #{$media-750w} {
+          bottom: 3.75em;
+          left: 0.5em;
+          right: 1.5em;
+        }
 
         h5 {
           text-align: center;
