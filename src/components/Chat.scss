@@ -72,6 +72,8 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
   flex-direction: column; 
   border: 2px solid $color-primary;
   border-radius: 1em;
+  // box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 0px 3px 1px rgba(255, 255, 255, 0.4);
 
   header {
     position: relative;
@@ -95,7 +97,7 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
       overflow-wrap: break-word;  // nie dla IE, ale radzi sobie świetnie z "word-break: break-all;"
 
       @media #{$media-750w} {
-        padding-right: 5em; // prawy +4.5 względem standardu!
+        padding-right: 5.3em; // prawy +4.8 względem standardu! (ulepszenie, aby pod przycisk się nie chował tekst)
       }
 
       span {
@@ -246,16 +248,16 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
             padding: 0.4em;
           }
 
-          &:hover {
-            background-color: darken(white, 10);
-          }
+/*           &:hover {
+            // background-color: darken(white, 10);
+          } */
 
           &.bad-or-empty {
             background-color: $error-background-color;
             border-color: lighten($red, 15);
 
             &:hover {
-              background-color: darken($error-background-color, 3); // !!! nie można wywołać kolejnego lighten(), dla wartości oblicoznej z lighten() !!!
+              background-color: lighten($error-background-color, 5); // !!! nie można wywołać kolejnego lighten(), dla wartości oblicoznej z lighten() !!!
               // background-color: red; // zwykła lub bezpośrednia wartość lub zmienną wyświetli od razu w zmienionym stanie
             } 
           } // &.bad-or-empty-END
@@ -278,7 +280,7 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
       .nickname-error {
         position: absolute;
         z-index: 100;
-        top: -6.5em;
+        top: -7em;
         // width: 90%;
         left: 0.5em;
         right: 0.5em;
@@ -287,9 +289,10 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
         color: white;
         background-color: $like-red;
         border: 3px solid lighten($like-red, 5);
+        box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.75);
 
         @media #{$media-750w} {
-          top: -5.5em;
+          top: -5.75em;
         }
       } // .nickname-error-END
 
@@ -335,28 +338,36 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
         // float: right;
           // margin: 0.2em;
         font-size: 1.1em;
+        font-weight: bold;
         margin-top: 0.75em;
         margin-bottom: 0.5em;
         padding-top: 0.25em;
         padding-bottom: 0.25em;
-        border-radius: 4px;
-        color: #d9a646;
-        background: transparent;
-        border: 2px solid #d9a646;
+        border-radius: 0.25em;
+        color: darken( $color-primary, 5); // #d9a646;
+        // background-color:  ; // transparent;
+        border: 2px solid $color-secondary;
+        box-shadow: 0px 0px 3px 1px rgba(255,255,255, 0.4);
+        transition: border-color 0.3s, color 0.3s, box-shadow 0.25s;
         // outline: none;
+
+        &:hover,
+        &:focus
+        {
+          // border: 2px solid #fff;
+          color: darken( $color-primary, 25);
+          box-shadow: 0px 0px 4px 2px rgba(255, 255, 255, 0.75);
+          cursor: pointer;
+        }
 
         @media #{$media-750w} {
           margin: 0;
           margin-left: 0.5em;
-          padding: 2.7em 0.25em;
+          padding: 2.75em 0.25em;
         }
       }
-      
-      .send-button:hover {
-        border: 2px solid #fff;
-        color: #fff;
-        cursor: pointer;
-      }
+
+
     } // .message-sending-END
 
   }  // footer-END

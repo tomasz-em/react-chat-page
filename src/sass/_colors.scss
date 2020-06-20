@@ -2,57 +2,34 @@
 
 $red: red;
 $like-red: #d11c1c;
-$medium-red: lighten($red, 20);
-$light-red: lighten($red, 33);  // < #ffaaaa
-$dark-red: darken($red, 20);
+// $medium-red: lighten($red, 20);
+$light-red: lighten($red, 33);  // #ffaaaa
+// $dark-red: darken($red, 20);
 
-$golden: #dd5;
-$text-light: #f8f9fa; // bootstrap: .text-light
-$text-light-hover: #cbd3da; // bootstrap: a.text-light:hover, a.text-light:focus
+//$golden: #dd5;
+// $text-light: #f8f9fa; // bootstrap: .text-light
+// $text-light-hover: #cbd3da; // bootstrap: a.text-light:hover, a.text-light:focus
 
 // PODEJŚCIE FUNKCJONALNE DO KOLORÓW - wykorzystanie wcześniejszych definicji
 
 $color-primary: #3f3fe7;    // #1717a7
 $color-primary-lighten: lighten($color-primary, 20%);
-$color-secondary: #1717a7;  // #3f3fe7
-// #1e5799 ; ##7db9e8
+$color-secondary: #1717a7;  // #3f3fe7; ....// #1e5799 ; ##7db9e8
 
 $text-color-darker: #04044e;   // ciemniejszy na bazie wcześniejszego "$color-primary:#1717a7"
-$color-dark-text: #333;
-$color-light-text: #ddd;
+
+$color-background-default-input: rgb(245, 245, 255);   // start: "rgb(239, 239, 239);"
+$color-background-default-button: rgb(230, 230, 255);   // start: "rgb(239, 239, 239);"
+$color-background-default-button-hover: rgb(255, 255, 255); // start: rgb(220, 220, 220);
+$color-border-outset: #767676;  // #767676 == rgb(118, 118, 118);
+$color-border-outset-hover: #000;
+
+$color-a-background-message:rgba(50, 50, 200, 0.05);
+$color-a-border-message: rgba(50, 50, 200, 0.2);
 
 $error-background-color: $light-red;
 
 $bookmark-color: yellow;
 $bookmark-color-hover: #f8f800;
-
-
-
-// WSTĘNIE NIEUŻYWANE TREŚCI (bez istniejacych odwołań)
-
-/*
-$chat-main-color: #333;
-$chat-secondary-color: #666;
-$sample-color: #c6538c; // nowa definicja koloru
-
-$red: red;
-$like-red: #d11c1c;
-$light-red: lighten(red, 25);
-
-$color-primary: #1717a7;
-$color-primary-lighten: lighten($color-primary, 30%);
-$color-secondary: #3f3fe7;
-// #1e5799 ; ##7db9e8
-
-$color-dark-text: #333;
-$color-light-text: #ddd; 
-
-
-$error-text-color: $red; 
-
-$error-background-color-lighten: lighten($light-red, 5);
-
-*/
-
 
 

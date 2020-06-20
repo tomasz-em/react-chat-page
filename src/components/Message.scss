@@ -47,8 +47,8 @@
       flex-grow: 2;
 
       &.my-message {
-        background-color:rgba(50, 50, 200, 0.05);
-        border: 2px solid rgba(50, 50, 200, 0.2);
+        background-color:$color-a-background-message;
+        border: 2px solid $color-a-border-message;
         border-radius: 0.25em;
       }
       

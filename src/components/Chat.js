@@ -271,7 +271,7 @@ class Chat extends React.Component {
 
             { this.state.isLoggedInUser && (  // - wariant TRUE - warunkowe wyświetlanie dla ZALOGOWANEGO/WPISANEGO użytkownika
             <div className="message-sending">
-              <textarea className="textarea" ref="textarea" wrap="soft" maxLength={ this.messageMaxLength } placeholder="Zapytaj o ofertę...  &#13;&#10;(szybka wysyłka: [Shift] + [Enter])"
+              <textarea className="textarea" ref="textarea" wrap="soft" maxLength={ this.messageMaxLength } placeholder="Zapytaj o ofertę... &#13;&#10;&#13;&#10;(szybka wysyłka: [Shift] + [Enter])"
                 onKeyUp={ this.handleEnterPress } />
               <button onClick={ this.sendMessage } className="send-button">Wyślij</button>
             </div>

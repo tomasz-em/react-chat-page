@@ -1,4 +1,4 @@
-//@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');      // tu jest jedyny import tej czcionki
 
 html {
     box-sizing: border-box;
@@ -37,9 +37,29 @@ button
 {
     font-family: Roboto, sans-serif;    // ! cały czas i tak "jakaś" czcionka domyślna była dostępna
     font-size: 1em;
-    padding: 0.25em;    // ta wartość się zmienia względem styli domyslnych przegląarek, zwłaszca dla ":hover"
-}
+    padding: 0.25em;    // ta wartość się zmienia względem styli domyślnych przegląarek, zwłaszcza dla ":hover"
+
+    border: 2px outset $color-border-outset; // #767676 == rgb(118, 118, 118);
+    background-color: $color-background-default-button; // rgb(239, 239, 239);
+    border-radius: 0.25em;
+    transition: background-color 0.25s, color 0.3s;
+
+    &:hover,
+    &:focus
+    {
+        background-color: $color-background-default-button-hover;
+        border: 2px outset #505050; // #767676 == rgb(118, 118, 118);
+        box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+    }    
+}   // (input, textarea, button)-END
 
 input[type="text"] {
     border-width: 2px;  // bez tego w IE zmienia się wysokość elementu, gdy ":hover"
+    background-color: $color-background-default-input;   // start: "rgb(239, 239, 239);"
+
+    &:hover,
+    &:focus
+    {
+        background-color: white;
+    } 
 }
