@@ -17,7 +17,7 @@ class Chat extends React.Component {
   constructor() {
     super();
 
-    this.chatServerUrl = 'https://socket-chat-server-zbqlbrimfj.now.sh';   // możliwy do użycia też 'https://chat-server.fbg.pl' 
+    this.chatServerUrl = 'https://chat-server.fbg.pl';   // możliwy do użycia też ' https://socket-chat-server-zbqlbrimfj.now.sh'
     this.nicknameMinLength = 3;  // minimlana długość imienia/ksywki
     this.nicknameMaxLength = 25;  // maksymalna długość
     this.messageMaxLength = 250;  // ilośc znaków do wpisania na kliencie; ile przyjmuje serwer?
@@ -54,7 +54,7 @@ class Chat extends React.Component {
       this.state.messages.push(message);
       this.setState({ messages: this.state.messages });
       if ( this.state.isSoundUsed ) this.audioElem.play();  // podpięcie powiadamiania dźwięowego po otrzymaniu nowej wiadomości
-      // console.log("NOWA WIADOMOŚĆ", message); // dostajemy cztery atrybuty z wysłanych dwóch, np.
+      console.log("NOWA WIADOMOŚĆ:", message); // dostajemy cztery atrybuty z wysłanych dwóch, np.
       // {text: "TREŚĆ_WIADOMOŚCI?", authorId: "NAZWA_WYSYŁAJACEGO", id: "4lOKAit8Q6", timestamp: 1592494594068}
     });
 
