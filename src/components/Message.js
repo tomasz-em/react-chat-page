@@ -31,23 +31,23 @@ const Message = ( props ) => { // ({ message, authorId })
 
   return (
     <article className="message" >
+      <div className="delete-me" title="Usuń wiadomość" onClick={ handleClickOnX } >
+          &times;
+      </div>
       <section>
-        <div className="delete-me" title="Usuń wiadomość" onClick={ handleClickOnX } >
-            &times;
-        </div>
-        <div className={ ( message.authorId === authorId ) && ( message.localUserId === localUserId ) ? "message-container my-message" : "message-container" } >
-          <p className="author">
-            <strong>{ message.authorId }</strong> o&nbsp;
-            <strong className="time">{ convertTimestampToHMSString( message.timestamp ) }</strong>
-          </p>
-          <p className={ ( message.authorId === authorId ) && ( message.localUserId === localUserId ) ? "my-post-text" : "" } >
-            { message.text }
-            { ( message.authorId === authorId ) && ( message.localUserId === localUserId ) && (
-              <button className="edit" onClick={ handleClickToEditMessage }>Edytuj</button>
-            )}
-          </p>
-        </div>
-      </section>
+      <div className={ ( message.authorId === authorId ) && ( message.localUserId === localUserId ) ? "message-container my-message" : "message-container" } >
+        <p className="author">
+          <strong>{ message.authorId }</strong> o&nbsp;
+          <strong className="time">{ convertTimestampToHMSString( message.timestamp ) }</strong>
+        </p>
+        <p className={ ( message.authorId === authorId ) && ( message.localUserId === localUserId ) ? "my-post-text" : "" } >
+          { message.text }
+          { ( message.authorId === authorId ) && ( message.localUserId === localUserId ) && (
+            <button className="edit" onClick={ handleClickToEditMessage }>Edytuj</button>
+          )}
+        </p>
+      </div>
+    </section>
     </article>
   )
 } // Message-END

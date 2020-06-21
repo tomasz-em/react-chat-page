@@ -138,10 +138,14 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
   footer {
     order: 3;
     background-color: $color-primary; /* rgba(100, 50, 20, 0.9); */
-    min-height: 13.5em;
-    flex-basis: 11.5em;
+    min-height: 14em;
+    flex-basis: 12em;
     border-bottom-left-radius: 0.75em;
     border-bottom-right-radius: 0.75em;
+
+    @media #{$media-750w} {
+      min-height: 12.25em;
+    }
 
     .chat-controls {
       position: relative;
