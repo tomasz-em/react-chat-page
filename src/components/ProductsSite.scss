@@ -1,0 +1,28 @@
+.whole-container {
+  max-width: 1000px;
+  margin: 3em auto;
+  background-color: #eee;
+  border-radius: 1em;
+  overflow: hidden;
+  box-shadow: 0 0 3px 0px rgba(0, 0, 0, 0.25);
+
+  & > * {
+    padding: 0.5em;
+  }
+
+  .page-header {
+    min-height: 15em;
+    background-color: #daccda;
+  }
+  
+  .main-content {
+    min-height: 25em;
+    background-color: #b8a298;
+  }
+
+  .page-footer {
+    min-height: 15em;
+    background-color: #e8d298;
+  }
+  
+} // .whole-container

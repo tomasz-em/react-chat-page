@@ -1,5 +1,6 @@
 import React from 'react';
 import { Chat } from "./Chat";
+import { ProductsSite } from "./ProductsSite";
 
 import './App.css';
 
@@ -24,7 +25,10 @@ class App extends React.Component {
 
   render() {
     return (
-      <Chat></Chat>
+      <>
+        <ProductsSite></ProductsSite>
+        <Chat></Chat>
+      </>  
     );
   }
 }
