@@ -1,6 +1,16 @@
+@import '../sass/main.scss';
+
+// zmienne komponentu ProductsSite na rzecz progów kwerend
+$media-min-320w: "only screen and (min-width: 320px)";
+$media-min-450w: "only screen and (min-width: 450px)";
+$media-min-600w: "only screen and (min-width: 600px)";
+$media-min-750w: "only screen and (min-width: 750px)";
+$media-min-1000w: "only screen and (min-width: 1000px)";
+$media-min-1100w: "only screen and (min-width: 1100px)";
+
 .whole-container {
   max-width: 1000px;
-  margin: 3em auto;
+  margin: 2em auto;
   background-color: #eee;
   border-radius: 1em;
   overflow: hidden;
@@ -12,8 +22,156 @@
 
   .page-header {
     min-height: 15em;
+    padding-top: 0;
     background-color: #daccda;
-  }
+    background-color: $color-primary-lighten;
+
+
+    h2 {
+      margin: 0;
+      padding: 0.35em 0;
+      color: #fafafa;
+      text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.6);
+      // background-color: $color-primary-lighten;
+
+      @media #{$media-min-600w} {
+        display: none;
+      }
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    section {
+      background-color: #9aa;
+
+      .logo-area {
+        display: flex;
+        flex-direction: row;
+        color: #eee;
+        background-color: $color-primary-lighten;
+
+/*         &:hover {
+          color: #fff;
+          text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.75);
+        } */
+
+        img {
+          padding-left: 1em;
+          max-width: 90px;
+          padding-top: 0.7em;
+        }
+
+        .logo-text {
+          font-size: 2.25em;
+          padding: 0.25em 0.6em;
+          font-weight: bold;
+          letter-spacing: 0.08em;
+          line-height: 0.95em;
+          color: #eee;
+          text-decoration: none;
+          text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.6);
+          transition: color 0.3s;
+
+          &:hover {
+            color: #fff;
+            text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.8);
+          }
+        } // .logo-text-END
+
+        h2 {
+          display: none;
+          text-align: right;
+          padding-top: 0.5em;
+          padding-left: 0.25em;
+          padding-right: 2.75em;
+          text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+
+          @media #{$media-min-600w} {
+            display: block;
+            margin-left: auto;
+          }
+
+          @media #{$media-min-1000w} {
+            padding-right: 0.5em;
+          }
+        } // h2-END
+      } // .logo-area-END
+
+
+      ul {
+        display: flex;
+        flex-direction: column;
+        padding-left: 0;
+        padding-right: 3em;
+        list-style: none;
+        background-color: #8b8;
+
+        @media #{$media-min-450w} {
+          flex-wrap: wrap;
+          flex-direction: row;
+        }
+
+        @media #{$media-min-1100w} {
+          padding-right: 0;
+        }
+
+        li {
+          padding: 0.25em 2em;
+          font-size: 1.5em;
+          text-align: center;
+          background-color: #56c;
+          color: white;
+          transition: background-color 0.3s, color 0.4s;
+
+          @media #{$media-min-450w} {
+            font-size: 1.4em;
+            flex-basis: 140px;
+            flex-grow: 1;
+            padding: 0.3em 1em;
+          }
+
+          @media #{$media-min-600w} {
+            font-size: 1.3em;
+            flex-basis: 120px;
+            padding: 0.35em 0.5em;
+          }
+
+          @media #{$media-min-750w} {
+            font-size: 1.25em;
+            flex-basis: 110px;
+            padding: 0.5em 0;
+          }
+
+          @media #{$media-min-1000w} {
+            padding: 0.75em 0;
+
+          }
+
+          &:nth-child(2n) {
+            background-color: #56e;
+          }
+
+          &:hover {
+            background-color: #23e;
+            color: yellow;
+            text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.6);
+            cursor: pointer;
+          }
+
+          &.active {
+            color: black;
+            font-weight: bold;
+            background-color: #f3f309;
+            text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.6);
+          }
+        } // li
+
+      }
+    }
+
+  } // .page-header-END
   
   .main-content {
     min-height: 25em;

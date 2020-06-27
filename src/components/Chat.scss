@@ -7,10 +7,10 @@ $chat-max-width: 500px;
 $width-treshold: 750px;
 
 // @media only screen and (min-width: 750px) {
-$media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w progu zmiany szerokości powyżej
+$media-min-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w progu zmiany szerokości powyżej
 
 // późniejsze użycie w danym elemencie jako wartościowanie danej zmiennej: 
-/* @media #{$media-750w} {
+/* @media #{$media-min-750w} {
   // ... 
 } */
 
@@ -96,7 +96,7 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
       word-break: break-all;  // automatyczne łamanie do nowej linii dla długich wyrazów | alternatywnie "overflow-wrap: break-word", ale mniejsze wsparcie
       overflow-wrap: break-word;  // nie dla IE, ale radzi sobie świetnie z "word-break: break-all;"
 
-      @media #{$media-750w} {
+      @media #{$media-min-750w} {
         padding-right: 5.3em; // prawy +4.8 względem standardu! (ulepszenie, aby pod przycisk się nie chował tekst)
       }
 
@@ -117,7 +117,7 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
         right: 0.5em;
         padding: 0.5em 1em;
 
-        @media #{$media-750w} {
+        @media #{$media-min-750w} {
           top: 2.25em;
         }
       } // .chat-logout-END
@@ -143,7 +143,7 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
     border-bottom-left-radius: 0.75em;
     border-bottom-right-radius: 0.75em;
 
-    @media #{$media-750w} {
+    @media #{$media-min-750w} {
       min-height: 12.25em;
     }
 
@@ -167,7 +167,7 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
         background-color: $color-primary-lighten;
         // cursor: pointer;
 
-        @media #{$media-750w} {
+        @media #{$media-min-750w} {
           bottom: 4.5em;
           // left: 0.5em;
           right: 2em;
@@ -182,7 +182,7 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
           margin: 1em 0;
           resize: none;
 
-          @media #{$media-750w} {
+          @media #{$media-min-750w} {
             min-height: 7.75em;
           }
         }
@@ -222,7 +222,7 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
         box-shadow: 0px 0px 3px 3px rgba(255, 255, 255, 0.8);
         cursor: pointer;
 
-        @media #{$media-750w} {
+        @media #{$media-min-750w} {
           bottom: 3.75em;
           left: 0.5em;
           right: 1.5em;
@@ -238,7 +238,7 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
           background-color: #ddd;
           vertical-align: middle;
 
-          @media #{$media-750w} {
+          @media #{$media-min-750w} {
             //vertical-align: baseline;
             margin-bottom: 0.25em;
           }
@@ -256,7 +256,7 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
         margin: 0.75em;
         padding: 0.2em 0.5em;
         padding-bottom: 0;
-/*         @media #{$media-750w} {
+/*         @media #{$media-min-750w} {
           margin-top: 0.75em;
         } */
       }
@@ -284,7 +284,7 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
         text-align: justify;
         text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
 
-        @media #{$media-750w} {
+        @media #{$media-min-750w} {
           padding: 1em 0;
         }
       }
@@ -293,7 +293,7 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
         display: flex;
         flex-direction: column;
 
-        @media #{$media-750w} {
+        @media #{$media-min-750w} {
           flex-direction: row;
           align-items: baseline;
         }
@@ -305,7 +305,7 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
           color: $text-color-darker;
           // border-width: 2px;
 
-          @media #{$media-750w} {
+          @media #{$media-min-750w} {
             flex-grow: 2;
             padding: 0.4em;
           }
@@ -331,7 +331,7 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
           margin-bottom: 0.5em;
           padding: 0.25em;
 
-          @media #{$media-750w} {
+          @media #{$media-min-750w} {
             margin-left: 0.5em;
             padding: 0.5em 1em;
           }
@@ -353,7 +353,7 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
         border: 3px solid lighten($like-red, 5);
         box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.75);
 
-        @media #{$media-750w} {
+        @media #{$media-min-750w} {
           top: -5.75em;
         }
       } // .nickname-error-END
@@ -367,7 +367,7 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
       padding: 0 0.5em;
       padding-bottom: 0.75em;
 
-      @media #{$media-750w} {
+      @media #{$media-min-750w} {
         flex-direction: row;
         align-items: center;
         padding-top: 0.25em;
@@ -390,7 +390,7 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
         // background-color: lighten($color: $color-primary, $amount: 50);  /* transparent; */
         resize: none;
 
-        @media #{$media-750w} {
+        @media #{$media-min-750w} {
           min-height: 7.5em;
         }
       }
@@ -412,7 +412,7 @@ $media-750w: "only screen and (min-width : 750px)";  // ustawiono 750px jak w pr
         transition: border-color 0.3s, color 0.3s, box-shadow 0.25s;
         // outline: none;
 
-        @media #{$media-750w} {
+        @media #{$media-min-750w} {
           margin: 0;
           margin-left: 0.5em;
           padding: 2.75em 0.25em;

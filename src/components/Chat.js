@@ -270,6 +270,8 @@ class Chat extends React.Component {
   } // handleClickToConfirmMessageEditing-END
 
   handleEnterPressToConfirmMessageEditing = ( event ) => {  // łatwiej wywołać przez funkcję "inline", ale w render() przy tym elemencie masa atrybutów
+    // event.preventDefault();  // ogólnie tu jest BUG, bo dopuszcza wstawienie [Entera], przy wysyłaniu potwierdzonej treści;
+    //  może "keyUp" się do tego nie nadaje, bo przyjmuje stan PO naciśnięciu klwaiszy, a nie nie PODCZAS ich naciskania
     if ( ( event.keyCode === 13 ) && ( event.shiftKey) ) {
       // console.log("ZATWIERDZANIE ZMIANY W EDYCJI Z TEXTAREA- KLAWIATURA", event );
       this.confirmEditedMessage();
@@ -317,7 +319,7 @@ class Chat extends React.Component {
                     defaultValue={ this.state.currentlyEditedMessageText } onKeyUp={ this.handleEnterPressToConfirmMessageEditing } ></textarea>
                   <p>
                     <img src={ info16x16dark } alt="dodatkowe informacje" />
-                    Możesz użyć [Enter] + [Shift] by zatwierdzić od razu zmiany, edytowane powyżej.
+                    Możesz użyć [Shift] + [Enter] by zatwierdzić od razu zmiany, edytowane powyżej.
                     </p>
                   <div>
                     <button className="confirm-button" onClick={ this.handleClickToConfirmMessageEditing } >Zatwierdź</button>

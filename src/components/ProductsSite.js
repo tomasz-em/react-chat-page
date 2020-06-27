@@ -2,6 +2,8 @@ import React from 'react';
 
 import './ProductsSite.scss';
 
+import siteLogo from '../assets/img/logo-min.png';
+
 class ProductsSite extends React.Component {
 
   constructor() {
@@ -14,9 +16,30 @@ class ProductsSite extends React.Component {
     return (
       <div className="whole-container">
         <header className="page-header">
-          <h1>Tytuł witryny</h1>
-          <h3>I jakiś podtytuł</h3>
-          <p>A wkrótce i także i lista nawigacyjna...</p>
+          <h2>Najlepsze narzędzia tylko u nas!</h2>
+          <nav>
+            <section>
+              <div className="logo-area">
+                <a href="#empty">
+                  <img src={ siteLogo } alt="Znana Firma" />
+                </a>
+                <a href="#empty">
+                  <p className="logo-text">Znana<br /> Firma</p>                  
+                </a>
+                <h2>Najlepsze narzędzia tylko u nas!</h2>
+              </div>
+              <ul className="nav">
+                <li>Główna</li>
+                <li className="active">Produkty</li>
+                <li>Usługi</li>
+                <li>Sklep</li>
+                <li>O nas</li>
+                <li>Szukaj</li>
+                <li>Kontakt</li>
+              </ul>
+            </section>
+          </nav>
+
         </header>
 
         <main className="main-content">
