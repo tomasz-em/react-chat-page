@@ -12,11 +12,11 @@ class App extends React.Component {
     };
   }
 
-  setTitle = (title) => {
-    if ( typeof title !== "string" ) {
-       throw new Error("Title should be an string!");
+  setTitle = pageTitle => {
+    if ( typeof pageTitle !== "string" ) {
+       throw new Error("Tytuł powinien być napisem!");
     }
-    document.title = title;
+    document.title = pageTitle;
   }
 
   componentDidMount() {

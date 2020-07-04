@@ -18,7 +18,7 @@ const Message = ( props ) => { // ({ message, authorId })
       // console.log("ZDARZENIE_CLICK_MESSAGE", event);
       props.onClick( message ); // wyślij zwrotnie obiekt konkretnej wiadomości (cztery atrybuty)
     }
-   }
+  }
 
    let handleClickToEditMessage = (event) => {
      // onEdit={ this.handleClickToPrepareMessageEditing }
@@ -27,7 +27,7 @@ const Message = ( props ) => { // ({ message, authorId })
       props.onEdit( message.id ); // wyślij zwrotnie wartość atrybutu dla tego obiektu wyrenderowanej wiadomości
     }
     
-   }
+  }
 
   return (
     <article className="message" >

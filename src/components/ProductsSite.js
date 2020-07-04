@@ -43,17 +43,57 @@ class ProductsSite extends React.Component {
         </header>
 
         <main className="main-content">
-        <div>
-            Tu trochę treści...
+          <div className="products-title">
+            <h1>Nasze produkty</h1>
           </div>
+          <section className="products-main">
+            <h3>Skorzystaj z poniższego filtrowania, by łatwiej wybrać poszukiwany produkt.</h3>
+            <div className="products-selection">
+              <button className="all-items">Wszystkie</button>
+              <button>Typ A</button>
+              <button className="selected">Typ B</button>
+              <button>Typ C</button>
+              <button>Typ D</button>
+              <button className="selected">Typ G</button>
+              <button className="selected">Typ P</button>
+              <button>Typ W</button>
+            </div>
+            <p>Jeśli gubisz się w produktach, zapraszamy do skorzystania z czatu. 
+              Nasi pracownicy chętnie pomogą Ci w wyborze.
+            </p> 
+          </section>
           <ul>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
+            <li>
+              <h2>Produkt</h2>
+              <p>Dane szczegółowe tego produktu ...</p>
+              <hr />
+            </li>
+            <li>
+              <h2>Produkt</h2>
+              <p>Dane szczegółowe tego produktu ...</p>
+              <hr />
+            </li>
+            <li>
+              <h2>Produkt</h2>
+              <p>Dane szczegółowe tego produktu ...</p>
+              <hr />
+            </li>
+            <li>
+              <h2>Produkt</h2>
+              <p>Dane szczegółowe tego produktu ...</p>
+              <hr />
+            </li>
+            <li>
+              <h2>Produkt</h2>
+              <p>Dane szczegółowe tego produktu ...</p>
+              <hr />
+            </li>
+            <li>
+              <h2>Produkt</h2>
+              <p>Dane szczegółowe tego produktu ...</p>
+            </li>
           </ul>
+          <p>...</p>
           <div>
             I tu znówtrochę treści...
           </div>

@@ -335,10 +335,10 @@ class Chat extends React.Component {
                     <img src={ trashcan16x16 } alt="usuwanie" title="skasuj wiadomości" /> &ndash; usuwa wszystkie wiadomości
                   </div>
                   <div>
-                    <img src={ alarm16x16_on  } alt="z dźwiękiem" title="włącz dźwięk powiadomienia" /> &ndash; włącza dźwięk przy nowej wiadomości
+                    <img src={ alarm16x16_on } alt="z dźwiękiem" title="włącz dźwięk powiadomienia" /> &ndash; włącza dźwięk przy nowej wiadomości
                   </div>
                   <div>
-                    <img src={ alarm16x16_off  } alt="bez dźwięku" title="wyłącz dźwięk powiadomienia" /> &ndash; wyłącza dźwięk powiadomienia
+                    <img src={ alarm16x16_off } alt="bez dźwięku" title="wyłącz dźwięk powiadomienia" /> &ndash; wyłącza dźwięk powiadomienia
                   </div>
                   <hr />
                   <p>Przeglądarka zachowuje ostatnio użytą nazwę użytkownika i ustawienia dźwięku.</p>
@@ -353,7 +353,7 @@ class Chat extends React.Component {
               </button>
               <button className= "icon-btn sound-toggle" title={`Powiadomienie dźwiękowe jest ${ this.state.isSoundUsed ? "WŁĄCZONE" : "WYŁĄCZONE" }` }
                 onClick={ this.handleClickToToggleSound }>
-                <img src={ this.state.isSoundUsed ? alarm16x16_off : alarm16x16_on  } alt="dźwięk włączony / bez dźwieku" /> {/* warunkowo budowan treść etykieta - określa stan BIEŻĄCY */}
+                <img src={ this.state.isSoundUsed ? alarm16x16_off : alarm16x16_on } alt="dźwięk włączony / bez dźwieku" /> {/* warunkowo budowan treść etykieta - określa stan BIEŻĄCY */}
                 </button>
               <button className= "icon-btn more-info" title="Dodatkowe informacje, objaśnienia, legenda" onClick={ this.handleClickToToggleInfoContent } >
                 <img src={ info16x16dark } alt="dodatkowe informacje" />

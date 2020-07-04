@@ -6,11 +6,15 @@
   padding: 0.45em;
   padding-right: 0.15em;
   font-size: 0.875em;
+  overflow-wrap: break-word;  // lepsze, ale IE tego nie ogarnia (poniżej!)
   word-break: break-all; // zabezpieczenia przed długimi treściami od użytkownika (BEZ SPACJI!), działa w IE
-  overflow-wrap: break-word;  // lepsze, ale IE tego nie ogarnia
+  white-space: pre-wrap;
+    // text-overflow: ellipsis;
+    // wra
   display: flex;
   justify-content: space-between;
   align-content: flex-start;
+  // max-width: 225px;
 
   &:nth-child(2n) > section {
     background-color: rgba(0, 0, 0, 0.05);
